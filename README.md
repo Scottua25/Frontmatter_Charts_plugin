@@ -1,94 +1,89 @@
-# Obsidian Sample Plugin
+# Heatmap Dashboard Plugin for Obsidian
 
-This is a sample plugin for Obsidian (https://obsidian.md).
+This plugin visualizes your YAML frontmatter data as dynamic heatmaps — perfect for tracking nutrition, habits, symptoms, and more directly inside your notes.
 
-This project uses TypeScript to provide type checking and documentation.
-The repo depends on the latest plugin API (obsidian.d.ts) in TypeScript Definition format, which contains TSDoc comments describing what it does.
+## ✨ Features
 
-This sample plugin demonstrates some of the basic functionality the plugin API can do.
-- Adds a ribbon icon, which shows a Notice when clicked.
-- Adds a command "Open Sample Modal" which opens a Modal.
-- Adds a plugin setting tab to the settings page.
-- Registers a global click event and output 'click' to the console.
-- Registers a global interval which logs 'setInterval' to the console.
+- 📊 **Per-note YAML field scanning** — automatically detects frontmatter fields in a selected folder.
+- 🗂️ **Multiple heatmap types** — define as many heatmaps as you want, each with its own folder, fields, and layout.
+- 🎨 **Visual customization** — choose Plotly colorscales, reverse the gradient, set font size/color, margins, and background.
+- 📆 **Limit date range** — restrict each heatmap to show only recent days.
+- ✅ **RDA-based value scaling** — shows percent of daily recommended value per nutrient (or other metric).
+- ❌ **Over-limit cell markers** — optionally show an “X” in cells exceeding 100%.
+- 🔍 **Collapsible field settings** — toggle detailed frontmatter field config with RDA inputs.
+- 💾 **Persistent settings** — plugin settings survive restarts and reloads.
 
-## First time developing plugins?
+## 📦 Installation
 
-Quick starting guide for new plugin devs:
+1. Clone this repo or download the latest release.
+2. Copy `main.js`, `manifest.json`, and `styles.css` into:
+   ```
+   <your-vault>/.obsidian/plugins/heatmap-dashboard/
+   ```
+3. Enable the plugin in Obsidian's settings under **Community Plugins**.
 
-- Check if [someone already developed a plugin for what you want](https://obsidian.md/plugins)! There might be an existing plugin similar enough that you can partner up with.
-- Make a copy of this repo as a template with the "Use this template" button (login to GitHub if you don't see it).
-- Clone your repo to a local development folder. For convenience, you can place this folder in your `.obsidian/plugins/your-plugin-name` folder.
-- Install NodeJS, then run `npm i` in the command line under your repo folder.
-- Run `npm run dev` to compile your plugin from `main.ts` to `main.js`.
-- Make changes to `main.ts` (or create new `.ts` files). Those changes should be automatically compiled into `main.js`.
-- Reload Obsidian to load the new version of your plugin.
-- Enable plugin in settings window.
-- For updates to the Obsidian API run `npm update` in the command line under your repo folder.
+## ⚙️ How to Use
 
-## Releasing new releases
+1. Open the plugin settings.
+2. Click **"Add New Heatmap Type"** and give it a name (e.g., `micros`, `workouts`, etc.).
+3. Set the folder to scan.
+4. Click **Scan** to detect YAML fields.
+5. Enable fields and input their target/RDA values (for % calculations).
+6. Use the code block in any note:
+   \`\`\`your-heatmap-name
+   \`\`\`
+7. Voilà — a live heatmap chart rendered using Plotly!
 
-- Update your `manifest.json` with your new version number, such as `1.0.1`, and the minimum Obsidian version required for your latest release.
-- Update your `versions.json` file with `"new-plugin-version": "minimum-obsidian-version"` so older versions of Obsidian can download an older version of your plugin that's compatible.
-- Create new GitHub release using your new version number as the "Tag version". Use the exact version number, don't include a prefix `v`. See here for an example: https://github.com/obsidianmd/obsidian-sample-plugin/releases
-- Upload the files `manifest.json`, `main.js`, `styles.css` as binary attachments. Note: The manifest.json file must be in two places, first the root path of your repository and also in the release.
-- Publish the release.
+## 🧪 Examples
 
-> You can simplify the version bump process by running `npm version patch`, `npm version minor` or `npm version major` after updating `minAppVersion` manually in `manifest.json`.
-> The command will bump version in `manifest.json` and `package.json`, and add the entry for the new version to `versions.json`
+### Example frontmatter
 
-## Adding your plugin to the community plugin list
-
-- Check the [plugin guidelines](https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines).
-- Publish an initial version.
-- Make sure you have a `README.md` file in the root of your repo.
-- Make a pull request at https://github.com/obsidianmd/obsidian-releases to add your plugin.
-
-## How to use
-
-- Clone this repo.
-- Make sure your NodeJS is at least v16 (`node --version`).
-- `npm i` or `yarn` to install dependencies.
-- `npm run dev` to start compilation in watch mode.
-
-## Manually installing the plugin
-
-- Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/your-plugin-id/`.
-
-## Improve code quality with eslint (optional)
-- [ESLint](https://eslint.org/) is a tool that analyzes your code to quickly find problems. You can run ESLint against your plugin to find common bugs and ways to improve your code. 
-- To use eslint with this project, make sure to install eslint from terminal:
-  - `npm install -g eslint`
-- To use eslint to analyze this project use this command:
-  - `eslint main.ts`
-  - eslint will then create a report with suggestions for code improvement by file and line number.
-- If your source code is in a folder, such as `src`, you can use eslint with this command to analyze all files in that folder:
-  - `eslint .\src\`
-
-## Funding URL
-
-You can include funding URLs where people who use your plugin can financially support it.
-
-The simple way is to set the `fundingUrl` field to your link in your `manifest.json` file:
-
-```json
-{
-    "fundingUrl": "https://buymeacoffee.com"
-}
+```yaml
+---
+date: 2025-06-01
+iron_mg: 6
+magnesium_mg: 300
+zinc_mg: 10
+---
 ```
 
-If you have multiple URLs, you can also do:
+### Example chart embed
 
-```json
-{
-    "fundingUrl": {
-        "Buy Me a Coffee": "https://buymeacoffee.com",
-        "GitHub Sponsor": "https://github.com/sponsors",
-        "Patreon": "https://www.patreon.com/"
-    }
-}
+````markdown
+```micros
 ```
+````
 
-## API Documentation
+## 🛠️ Developer Notes
 
-See https://github.com/obsidianmd/obsidian-api
+Built with:
+- TypeScript
+- Obsidian plugin API
+- Plotly.js for rendering
+
+This project originated from the [Obsidian Sample Plugin](https://github.com/obsidianmd/obsidian-sample-plugin) and was extensively expanded to support advanced data visualization use cases inside Obsidian.
+
+## 📚 Roadmap
+
+### Near-Term Improvements
+- [ ] Add "X" markers for over-RDA values (visual flagging)
+- [ ] Toggle to display raw values instead of % of RDA
+- [ ] Improved error reporting if folder or frontmatter is invalid
+- [ ] Custom sorting for Y-axis fields
+
+### Stretch Goals
+- [ ] Support for heatmap export to PNG/SVG
+- [ ] Toggle between weekly/monthly aggregations
+- [ ] Hover tooltips with field + exact value
+- [ ] Inline chart preview when editing notes
+- [ ] Theme-aware color presets (light/dark mode auto-switch)
+
+## ❤️ Support
+
+If this plugin helps improve your Obsidian workflow, consider showing support:
+
+[Buy Me a Coffee ☕](https://buymeacoffee.com)
+
+---
+
+> Built by someone who'd rather see their data in heatmaps than spreadsheets.
