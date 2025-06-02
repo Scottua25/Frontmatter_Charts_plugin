@@ -1,0 +1,139 @@
+﻿======== Resolving module 'tslib' from 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/main.ts'. ========
+Explicitly specified module resolution kind: 'NodeJs'.
+'baseUrl' option is set to 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard', using this value to resolve non-relative module name 'tslib'.
+Resolving module name 'tslib' relative to base url 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard' - 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/tslib'.
+Loading module as file / folder, candidate module location 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/tslib', target file type 'TypeScript'.
+File 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/tslib.ts' does not exist.
+File 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/tslib.tsx' does not exist.
+File 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/tslib.d.ts' does not exist.
+Directory 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/tslib' does not exist, skipping all lookups in it.
+Loading module 'tslib' from 'node_modules' folder, target file type 'TypeScript'.
+Found 'package.json' at 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/node_modules/tslib/package.json'.
+'package.json' does not have a 'typesVersions' field.
+File 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/node_modules/tslib.ts' does not exist.
+File 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/node_modules/tslib.tsx' does not exist.
+File 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/node_modules/tslib.d.ts' does not exist.
+'package.json' has 'typings' field 'tslib.d.ts' that references 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/node_modules/tslib/tslib.d.ts'.
+File 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/node_modules/tslib/tslib.d.ts' exist - use it as a name resolution result.
+Resolving real path for 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/node_modules/tslib/tslib.d.ts', result 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/node_modules/tslib/tslib.d.ts'.
+======== Module name 'tslib' was successfully resolved to 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/node_modules/tslib/tslib.d.ts' with Package ID 'tslib/tslib.d.ts@2.8.1'. ========
+======== Resolving module 'obsidian' from 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/main.ts'. ========
+Explicitly specified module resolution kind: 'NodeJs'.
+'baseUrl' option is set to 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard', using this value to resolve non-relative module name 'obsidian'.
+Resolving module name 'obsidian' relative to base url 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard' - 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/obsidian'.
+Loading module as file / folder, candidate module location 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/obsidian', target file type 'TypeScript'.
+File 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/obsidian.ts' does not exist.
+File 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/obsidian.tsx' does not exist.
+File 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/obsidian.d.ts' does not exist.
+Directory 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/obsidian' does not exist, skipping all lookups in it.
+Loading module 'obsidian' from 'node_modules' folder, target file type 'TypeScript'.
+File 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/node_modules/obsidian.ts' does not exist.
+File 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/node_modules/obsidian.tsx' does not exist.
+File 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/node_modules/obsidian.d.ts' does not exist.
+File 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/node_modules/@types/obsidian.d.ts' does not exist.
+Directory 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/node_modules' does not exist, skipping all lookups in it.
+Directory 'F:/Engineering/byScottua/Code/Obsidian Plugins/node_modules' does not exist, skipping all lookups in it.
+Directory 'F:/Engineering/byScottua/Code/node_modules' does not exist, skipping all lookups in it.
+Directory 'F:/Engineering/byScottua/node_modules' does not exist, skipping all lookups in it.
+Directory 'F:/Engineering/node_modules' does not exist, skipping all lookups in it.
+Directory 'F:/node_modules' does not exist, skipping all lookups in it.
+'baseUrl' option is set to 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard', using this value to resolve non-relative module name 'obsidian'.
+Resolving module name 'obsidian' relative to base url 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard' - 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/obsidian'.
+Loading module as file / folder, candidate module location 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/obsidian', target file type 'JavaScript'.
+File 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/obsidian.js' does not exist.
+File 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/obsidian.jsx' does not exist.
+Directory 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/obsidian' does not exist, skipping all lookups in it.
+Loading module 'obsidian' from 'node_modules' folder, target file type 'JavaScript'.
+File 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/node_modules/obsidian.js' does not exist.
+File 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/node_modules/obsidian.jsx' does not exist.
+Directory 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/node_modules' does not exist, skipping all lookups in it.
+Directory 'F:/Engineering/byScottua/Code/Obsidian Plugins/node_modules' does not exist, skipping all lookups in it.
+Directory 'F:/Engineering/byScottua/Code/node_modules' does not exist, skipping all lookups in it.
+Directory 'F:/Engineering/byScottua/node_modules' does not exist, skipping all lookups in it.
+Directory 'F:/Engineering/node_modules' does not exist, skipping all lookups in it.
+Directory 'F:/node_modules' does not exist, skipping all lookups in it.
+======== Module name 'obsidian' was not resolved. ========
+======== Resolving module './src/settings' from 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/main.ts'. ========
+Explicitly specified module resolution kind: 'NodeJs'.
+Loading module as file / folder, candidate module location 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/src/settings', target file type 'TypeScript'.
+File 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/src/settings.ts' exist - use it as a name resolution result.
+======== Module name './src/settings' was successfully resolved to 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/src/settings.ts'. ========
+======== Resolving module './src/settings-tab' from 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/main.ts'. ========
+Explicitly specified module resolution kind: 'NodeJs'.
+Loading module as file / folder, candidate module location 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/src/settings-tab', target file type 'TypeScript'.
+File 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/src/settings-tab.ts' exist - use it as a name resolution result.
+======== Module name './src/settings-tab' was successfully resolved to 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/src/settings-tab.ts'. ========
+======== Resolving module 'tslib' from 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/src/settings.ts'. ========
+Explicitly specified module resolution kind: 'NodeJs'.
+'baseUrl' option is set to 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard', using this value to resolve non-relative module name 'tslib'.
+Resolving module name 'tslib' relative to base url 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard' - 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/tslib'.
+Loading module as file / folder, candidate module location 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/tslib', target file type 'TypeScript'.
+File 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/tslib.ts' does not exist.
+File 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/tslib.tsx' does not exist.
+File 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/tslib.d.ts' does not exist.
+Directory 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/tslib' does not exist, skipping all lookups in it.
+Loading module 'tslib' from 'node_modules' folder, target file type 'TypeScript'.
+Directory 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/src/node_modules' does not exist, skipping all lookups in it.
+Resolution for module 'tslib' was found in cache from location 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard'.
+======== Module name 'tslib' was successfully resolved to 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/node_modules/tslib/tslib.d.ts' with Package ID 'tslib/tslib.d.ts@2.8.1'. ========
+======== Resolving module 'tslib' from 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/src/settings-tab.ts'. ========
+Resolution for module 'tslib' was found in cache from location 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/src'.
+======== Module name 'tslib' was successfully resolved to 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/node_modules/tslib/tslib.d.ts' with Package ID 'tslib/tslib.d.ts@2.8.1'. ========
+======== Resolving module 'obsidian' from 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/src/settings-tab.ts'. ========
+Explicitly specified module resolution kind: 'NodeJs'.
+'baseUrl' option is set to 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard', using this value to resolve non-relative module name 'obsidian'.
+Resolving module name 'obsidian' relative to base url 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard' - 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/obsidian'.
+Loading module as file / folder, candidate module location 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/obsidian', target file type 'TypeScript'.
+File 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/obsidian.ts' does not exist.
+File 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/obsidian.tsx' does not exist.
+File 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/obsidian.d.ts' does not exist.
+Directory 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/obsidian' does not exist, skipping all lookups in it.
+Loading module 'obsidian' from 'node_modules' folder, target file type 'TypeScript'.
+Directory 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/src/node_modules' does not exist, skipping all lookups in it.
+Resolution for module 'obsidian' was found in cache from location 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard'.
+======== Module name 'obsidian' was not resolved. ========
+======== Resolving module '../main' from 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/src/settings-tab.ts'. ========
+Explicitly specified module resolution kind: 'NodeJs'.
+Loading module as file / folder, candidate module location 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/main', target file type 'TypeScript'.
+File 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/main.ts' exist - use it as a name resolution result.
+======== Module name '../main' was successfully resolved to 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/main.ts'. ========
+======== Resolving type reference directive 'obsidian', containing file 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/__inferred type names__.ts', root directory 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/types,F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/node_modules/@types'. ========
+Resolving with primary search path 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/types, F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/node_modules/@types'.
+File 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/types/obsidian/package.json' does not exist.
+File 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/types/obsidian/index.d.ts' exist - use it as a name resolution result.
+Resolving real path for 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/types/obsidian/index.d.ts', result 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/types/obsidian/index.d.ts'.
+======== Type reference directive 'obsidian' was successfully resolved to 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/types/obsidian/index.d.ts', primary: true. ========
+======== Resolving module 'obsidian' from 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/types/obsidian/index.d.ts'. ========
+Explicitly specified module resolution kind: 'NodeJs'.
+'baseUrl' option is set to 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard', using this value to resolve non-relative module name 'obsidian'.
+Resolving module name 'obsidian' relative to base url 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard' - 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/obsidian'.
+Loading module as file / folder, candidate module location 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/obsidian', target file type 'TypeScript'.
+File 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/obsidian.ts' does not exist.
+File 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/obsidian.tsx' does not exist.
+File 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/obsidian.d.ts' does not exist.
+Directory 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/obsidian' does not exist, skipping all lookups in it.
+Loading module 'obsidian' from 'node_modules' folder, target file type 'TypeScript'.
+Directory 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/types/obsidian/node_modules' does not exist, skipping all lookups in it.
+Directory 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard/types/node_modules' does not exist, skipping all lookups in it.
+Resolution for module 'obsidian' was found in cache from location 'F:/Engineering/byScottua/Code/Obsidian Plugins/Heatmap Chart/heatmap-dashboard'.
+======== Module name 'obsidian' was not resolved. ========
+main.ts(1,47): error TS2307: Cannot find module 'obsidian' or its corresponding type declarations.
+main.ts(20,9): error TS2339: Property 'registerMarkdownCodeBlockProcessor' does not exist on type 'HeatmapDashboardPlugin'.
+main.ts(20,57): error TS7006: Parameter '_source' implicitly has an 'any' type.
+main.ts(20,66): error TS7006: Parameter 'el' implicitly has an 'any' type.
+main.ts(25,8): error TS2339: Property 'addSettingTab' does not exist on type 'HeatmapDashboardPlugin'.
+main.ts(29,66): error TS2339: Property 'loadData' does not exist on type 'HeatmapDashboardPlugin'.
+main.ts(33,14): error TS2339: Property 'saveData' does not exist on type 'HeatmapDashboardPlugin'.
+src/settings-tab.ts(7,8): error TS2307: Cannot find module 'obsidian' or its corresponding type declarations.
+src/settings-tab.ts(19,11): error TS2339: Property 'containerEl' does not exist on type 'HeatmapSettingTab'.
+src/settings-tab.ts(27,16): error TS7006: Parameter 'slider' implicitly has an 'any' type.
+src/settings-tab.ts(32,23): error TS7006: Parameter 'value' implicitly has an 'any' type.
+src/settings-tab.ts(42,14): error TS7006: Parameter 'text' implicitly has an 'any' type.
+src/settings-tab.ts(46,23): error TS7006: Parameter 'value' implicitly has an 'any' type.
+src/settings-tab.ts(78,24): error TS7006: Parameter 'value' implicitly has an 'any' type.
+src/settings-tab.ts(79,77): error TS7006: Parameter 's' implicitly has an 'any' type.
+src/settings-tab.ts(92,24): error TS7006: Parameter 'value' implicitly has an 'any' type.
+src/settings-tab.ts(94,33): error TS7006: Parameter 'pair' implicitly has an 'any' type.
+src/settings-tab.ts(95,44): error TS7006: Parameter 's' implicitly has an 'any' type.
+src/settings-tab.ts(109,54): error TS7006: Parameter 'value' implicitly has an 'any' type.
+src/settings-tab.ts(111,16): error TS7006: Parameter 'btn' implicitly has an 'any' type.
