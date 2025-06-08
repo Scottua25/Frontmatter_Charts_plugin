@@ -56,10 +56,10 @@ export class HeatmapSettingTab extends PluginSettingTab {
 	async display(): Promise<void> {
 		const container = this.containerEl;
 		container.innerHTML = "";
-		container.createEl("h2", { text: "Heatmap Chart Settings" });	
+		container.createEl("h1", { text: "Chart Settings" });	
 
 		const h3 = document.createElement("h3");
-		h3.textContent = "Heatmap Types";
+		h3.textContent = "Charts";
 		container.appendChild(h3);
 
 		for (const [key, config] of Object.entries(this.plugin.settings.heatmapTypes)) {
@@ -75,10 +75,10 @@ export class HeatmapSettingTab extends PluginSettingTab {
 		}
 		// === Add New Heatmap Type UI ===
 		new Setting(this.containerEl)
-			.setName("Add New Heatmap Type")
-			.setDesc("Unique code block name (e.g., nutrients)")
+			.setName("Add New Chart")
+			.setDesc("Unique code block name (e.g., nutrients). This will be used to insert the chart into a note.")
 			.addText((text) => {
-				text.setPlaceholder("new-heatmap-type").onChange((value) => {
+				text.setPlaceholder("new-chart-name").onChange((value) => {
 					this._newHeatmapTypeName = value.trim();
 				});
 			})

@@ -22,18 +22,51 @@ export async function renderChartSettingsBlock(
 	updateFieldsFromFolder: (key: string, folder: string) => Promise<void>
 ): Promise<void> {
 
+	const detailsEl = document.createElement("details");
+	detailsEl.classList.add("chart-config-toggle");
+	detailsEl.open = true; // or false if you want them collapsed by default
+	container.appendChild(detailsEl);
+	
+	const summaryEl = document.createElement("summary");
+	summaryEl.textContent = `Type: ${key}`;
+	summaryEl.style.fontWeight = "bold";
+	summaryEl.style.marginBottom = "1em";
+	detailsEl.appendChild(summaryEl);
+	
+	// Main block inside the collapsible
 	const block = document.createElement("div");
 	block.classList.add("heatmap-config-block");
-	container.appendChild(block);
-
-	const h4 = document.createElement("h4");
-	h4.textContent = `Type: ${key}`;
-	block.appendChild(h4);
+	detailsEl.appendChild(block);	
 
     let colorscaleSetting: Setting;
     let reverseScaleSetting: Setting;
     let chartColorSetting: Setting;
     let heatmapCellHeightSetting: Setting;
+
+	const folderSetting = new Setting(block)
+		.setName("Vault Folder Path")
+		.setDesc("Folder to scan for frontmatter fields");
+
+	folderSetting.addText((text) => {
+		text
+			.setPlaceholder("e.g., Daily Notes")
+			.setValue(config.folder || "")
+			.onChange(async (value) => {
+				config.folder = value.trim();
+				await plugin.saveSettings();
+				// refresh();
+			});
+	});
+
+	folderSetting.addButton((btn: ButtonComponent) => {
+		btn.setButtonText("Scan")
+			.setCta()
+			.onClick(async () => {
+                await updateFieldsFromFolder(key, config.folder || "");
+				await plugin.saveSettings();
+				refresh();
+			});
+	});
 
 // === Chart Type Dropdown ===
 new Setting(block)
@@ -99,41 +132,6 @@ const yFieldSetting = new Setting(block)
 			});
 	});
 const yFieldEl = yFieldSetting.settingEl;
-
-	const folderSetting = new Setting(block)
-		.setName("Vault Folder Path")
-		.setDesc("Folder to scan for frontmatter fields");
-
-	folderSetting.addText((text) => {
-		text
-			.setPlaceholder("e.g., Daily Notes")
-			.setValue(config.folder || "")
-			.onChange(async (value) => {
-				config.folder = value.trim();
-				await plugin.saveSettings();
-				// refresh();
-			});
-	});
-
-	folderSetting.addButton((btn: ButtonComponent) => {
-		btn.setButtonText("Scan")
-			.setCta()
-			.onClick(async () => {
-                await updateFieldsFromFolder(key, config.folder || "");
-				await plugin.saveSettings();
-				refresh();
-			});
-	});
-
-	new Setting(block).addButton((btn) =>
-		btn.setButtonText("Delete")
-			.setWarning()
-			.onClick(async () => {
-				delete plugin.settings.heatmapTypes[key];
-				await plugin.saveSettings();
-				refresh();
-			})
-	);
 
 	new Setting(block)
 		.setName("Top Margin")
@@ -279,15 +277,15 @@ const yFieldEl = yFieldSetting.settingEl;
         }
     );
         
-const detailsEl = document.createElement("details");
-detailsEl.classList.add("yaml-field-toggle");
-block.appendChild(detailsEl);
-
-const summaryEl = document.createElement("summary");
-summaryEl.textContent = "Detected YAML Fields";
-summaryEl.style.fontWeight = "bold";
-detailsEl.appendChild(summaryEl);
-// detailsEl.open = true;
+	const yamlDetailsEl = document.createElement("details");
+	yamlDetailsEl.classList.add("yaml-field-toggle");
+	block.appendChild(yamlDetailsEl); // ✅ Append to the config block, not the container or itself
+	
+	const yamlSummaryEl = document.createElement("summary");
+	yamlSummaryEl.textContent = "Detected YAML Fields";
+	yamlSummaryEl.style.fontWeight = "bold";
+	yamlDetailsEl.appendChild(yamlSummaryEl); // ✅ Proper nesting	
+		// detailsEl.open = true;
 
 if (config.fields && Object.keys(config.fields).length > 0) {
 	const sortedFields = Object.keys(config.fields).sort();
@@ -316,6 +314,19 @@ if (config.fields && Object.keys(config.fields).length > 0) {
 		});
 	}
 }
+		// === Delete Chart Button
+		const deleteSetting = new Setting(block)
+		.setName("Delete Chart")
+		.setDesc("Delete this chart. CANNOT BE UNDONE! BE SURE!")
+		deleteSetting.addButton((btn) =>
+			btn.setButtonText("Delete")
+				.setWarning()
+				.onClick(async () => {
+					delete plugin.settings.heatmapTypes[key];
+					await plugin.saveSettings();
+					refresh();
+				})
+		);
 
         // === Visibility Controller
         function updateAxisVisibility() {
