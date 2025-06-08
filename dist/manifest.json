@@ -3,7 +3,7 @@
 	"name": "Heatmap Dashboard",
 	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
-	"description": "Generates heatmaps from frontmatter values to visualize nutrient and habit tracking trends.",
+	"description": "Generates heatmaps from frontmatter values to visualize habit tracking trends.",
 	"author": "Scottua",
 	"authorUrl": "https://github.com/Scottua",
 	"fundingUrl": "https://www.buymeacoffee.com/scottua",

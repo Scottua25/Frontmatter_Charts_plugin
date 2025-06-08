@@ -8,7 +8,7 @@ import {
 	MarkdownRenderChild
 } from "obsidian";
 
-import { DEFAULT_SETTINGS, HeatmapSettings } from "./src/settings";
+import { DEFAULT_SETTINGS, HeatmapSettings, HeatmapTypeConfig } from "./src/settings";
 import { HeatmapSettingTab } from "./src/settings-tab";
 import "./styles.css";
 import Plotly from "plotly.js-dist-min";
@@ -27,13 +27,7 @@ declare global {
 	}
 }
 
-function renderHeatmap(app: App, el: HTMLElement, type: string, settings: HeatmapSettings) {
-	const config = settings.heatmapTypes[type];
-	if (!config || !config.fields) {
-		el.createEl("div", { text: "Heatmap config missing." });
-		return;
-	}
-
+function getDataMap(app: App, config: HeatmapTypeConfig): Record<string, Record<string, number>> {
 	const dataMap: Record<string, Record<string, number>> = {};
 
 	if (config.folder) {
@@ -44,13 +38,12 @@ function renderHeatmap(app: App, el: HTMLElement, type: string, settings: Heatma
 					const cache = app.metadataCache.getFileCache(file);
 					const fm = cache?.frontmatter;
 					if (!fm) continue;
-	
-					// Infer date from frontmatter or filename
-					const date = fm.date || file.basename; // assumes ISO date or similar
+
+					const date = fm.date || file.basename;
 					if (typeof date !== "string") continue;
-	
+
 					dataMap[date] ??= {};
-	
+
 					for (const [field, cfg] of Object.entries(config.fields)) {
 						if (cfg.enabled && typeof fm[field] === "number") {
 							dataMap[date][field] = fm[field];
@@ -60,7 +53,20 @@ function renderHeatmap(app: App, el: HTMLElement, type: string, settings: Heatma
 			}
 		}
 	}
-	
+
+	return dataMap;
+}
+
+function renderHeatmap(app: App, el: HTMLElement, type: string, settings: HeatmapSettings) {
+	const config = settings.heatmapTypes[type];
+	if (!config || !config.fields) {
+		el.createEl("div", { text: "Heatmap config missing." });
+		return;
+	}
+
+	const dataMap = getDataMap(app, config);
+	  
+	// Sort dates
 	let dates = Object.keys(dataMap).sort();
 	const limit = config.limitDays ?? 0;
 	if (limit > 0) {
@@ -116,6 +122,8 @@ function renderHeatmap(app: App, el: HTMLElement, type: string, settings: Heatma
 		zmax: 100
 	}];
 	
+	const cellHeight = Math.max(10, Math.min(100, config.cellHeight ?? 30));
+
 	const layout = {
 		title: `Heatmap: ${type}`,
 		margin: { t: config.marginTop ?? 30, l: 120 },
@@ -129,24 +137,15 @@ function renderHeatmap(app: App, el: HTMLElement, type: string, settings: Heatma
 			automargin: true,
 			tickfont: { size: config.fontSize ?? 12 }
 		},
-		height: 50 + fields.length * 30,
-		plot_bgcolor: config.backgroundColor ?? "rgba(0,0,0,0)",
-		paper_bgcolor: config.backgroundColor ?? "rgba(0,0,0,0)",
+		height: 50 + fields.length * cellHeight,
+		plot_bgcolor: config.backgroundChartColor ?? "rgba(0,0,0,0)",
+		paper_bgcolor: config.backgroundPageColor ?? "rgba(0,0,0,0)",
 		font: {
 			color: config.fontColor ?? "#ffffff",
 			size: config.fontSize ?? 12
-		},
-		annotations: {
-		plot_bgcolor: config.backgroundColor || 'rgba(0,0,0,0)',
-		font: {
-			color: config.fontColor || "#000",
-			size: config.fontSize || 12,
-		},
-		height: 50 + fields.length * 30
-	}
-	};
+		}
+	};	
 	
-
 	const chartDiv = el.createDiv({ cls: "heatmap-chart" });
 	// @ts-ignore
 	Plotly.newPlot(chartDiv, data, layout, { displayModeBar: false });
@@ -155,18 +154,34 @@ function renderHeatmap(app: App, el: HTMLElement, type: string, settings: Heatma
 export default class HeatmapDashboardPlugin extends Plugin {
 	settings!: HeatmapSettings;
 
+	registerAllProcessors() {
+		Object.keys(this.settings.heatmapTypes).forEach((type) => {
+			this.registerMarkdownCodeBlockProcessor(type, async (_source, el) => {
+				const config = this.settings.heatmapTypes[type];
+				if (!config) return;
+	
+				switch (config.chartType) {
+					case "bar":
+						renderBarChart(this.app, el, type, this.settings);
+						break;
+					case "line":
+						renderLineChart(this.app, el, type, this.settings);
+						break;
+					default:
+						renderHeatmap(this.app, el, type, this.settings);
+						break;
+				}
+			});
+		});
+	}
+	
 	async onload() {
 		console.log("Loading Heatmap Dashboard Plugin");
 	
 		// Load settings
 		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
 	
-		// Register code block processors
-		Object.keys(this.settings.heatmapTypes).forEach((type) => {
-			this.registerMarkdownCodeBlockProcessor(type, async (_source, el) => {
-				renderHeatmap(this.app, el, type, this.settings);
-			});			
-		});
+		this.registerAllProcessors();
 	
 		// Add settings tab
 		this.addSettingTab(new HeatmapSettingTab(this.app, this));
@@ -177,3 +192,83 @@ export default class HeatmapDashboardPlugin extends Plugin {
 		await this.saveData(this.settings);
 	}
 }
+
+	function renderBarChart(app: App, el: HTMLElement, type: string, settings: HeatmapSettings) {
+		const config = settings.heatmapTypes[type];
+		if (!config || !config.xField || !config.yField) {
+			el.createEl("div", { text: "Missing chart configuration." });
+			return;
+		}
+	
+		const dataMap = getDataMap(app, config);
+		const dates = Object.keys(dataMap).sort().slice(-config.limitDays || undefined);
+	
+		const x = dates;
+		const y = dates.map(date => dataMap[date]?.[config.yField!] ?? 0);
+	
+		const data = [{
+			x,
+			y,
+			type: 'bar',
+			marker: {
+				color: config.chartColor || '#888'
+			}
+		}];
+	
+		const layout = {
+			title: `Bar Chart: ${type}`,
+			plot_bgcolor: config.backgroundChartColor || "rgba(0,0,0,0)",
+			paper_bgcolor: config.backgroundPageColor || "rgba(0,0,0,0)",
+			font: {
+				color: config.fontColor || "#fff",
+				size: config.fontSize || 12
+			}
+		};
+	
+		const chartDiv = el.createDiv({ cls: "bar-chart" });
+		// @ts-ignore
+		Plotly.newPlot(chartDiv, data, layout, { displayModeBar: false });
+	}
+	
+	function renderLineChart(app: App, el: HTMLElement, type: string, settings: HeatmapSettings) {
+		const config = settings.heatmapTypes[type];
+		if (!config || !config.xField || !config.yField) {
+			el.createEl("div", { text: "Missing chart configuration." });
+			return;
+		}
+	
+		const dataMap = getDataMap(app, config);
+		const dates = Object.keys(dataMap).sort().slice(-config.limitDays || undefined);
+	
+		const x = dates;
+		const y = dates.map(date => dataMap[date]?.[config.yField!] ?? 0);
+	
+		const data = [{
+			x,
+			y,
+			type: 'scatter',
+			mode: 'lines+markers',
+			line: {
+			  color: config.chartColor || '#ff9900',
+			  width: 2
+			},
+			marker: {
+			  color: config.chartColor || '#ff9900',
+			  size: 6
+			}
+		  }];		  
+	
+		const layout = {
+			title: `Line Chart: ${type}`,
+			plot_bgcolor: config.backgroundColor || "rgba(0,0,0,0)",
+			paper_bgcolor: config.backgroundColor || "rgba(0,0,0,0)",
+			font: {
+				color: config.fontColor || "#fff",
+				size: config.fontSize || 12
+			}
+		};
+	
+		const chartDiv = el.createDiv({ cls: "line-chart" });
+		// @ts-ignore
+		Plotly.newPlot(chartDiv, data, layout, { displayModeBar: false });
+	}
