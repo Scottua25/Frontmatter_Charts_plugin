@@ -11,6 +11,10 @@ export interface HeatmapTypeConfig {
 	folder: string;
 	fields: Record<string, FieldConfig>;
 	limitDays: number;
+
+	chartType?: string;
+
+	// Common visual config
 	colorscale?: string;
 	showScale?: boolean;
 	reverseScale?: boolean;
@@ -18,14 +22,11 @@ export interface HeatmapTypeConfig {
 	marginTop?: number;
 	fontColor?: string;
 	backgroundColor?: string;
-	chartType?: string; // "heatmap", "bar", "line", etc.
-	xField?: string; // Field to use for x-axis (non-heatmap)
-	yField?: string; // Field to use for y-axis (non-heatmap)
 	chartColor?: string;
-	backgroundChartColor?: string; // for plot_bgcolor
-	backgroundPageColor?: string;  // for paper_bgcolor
-	cellHeight?: number; // for heatmap
-	
+	backgroundChartColor?: string;
+	backgroundPageColor?: string;
+	cellHeight?: number;
+	[roleKey: string]: any; // dynamically store role fields like x, y, labels, etc.
 }
 
 
@@ -38,8 +39,28 @@ export interface HeatmapSettings {
 }
 
 export const DEFAULT_SETTINGS: HeatmapSettings = {
-	heatmapTypes: {},
+	heatmapTypes: {
+		"Example Bar Chart": {
+			folder: "",
+			fields: {},
+			limitDays: 30,
+			chartType: "bar",
+			x: "",
+			y: "",
+			chartColor: "#ff9900"
+		},
+		"Example Line Chart": {
+			folder: "",
+			fields: {},
+			limitDays: 30,
+			chartType: "line",
+			x: "",
+			y: "",
+			chartColor: "#00ccff"
+		}
+	},
 	gridSize: 10,
 	opacity: 1.0
 };
+
 

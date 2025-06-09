@@ -10,6 +10,8 @@ import {
 } from "obsidian";
 import type HeatmapDashboardPlugin from "../main";
 import { parseRGBA, rgbToHex, hexToRgb, addColorWithAlphaSetting, addInlineColorPicker } from "./colorUtils";
+import { chartRoleDefinitions } from "./chartRoles";
+import { renderChartRoleFields } from "../renderers/renderChartRoleFields";
 
 // Must be async because we use await inside
 export async function renderChartSettingsBlock(
@@ -24,19 +26,27 @@ export async function renderChartSettingsBlock(
 
 	const detailsEl = document.createElement("details");
 	detailsEl.classList.add("chart-config-toggle");
-	detailsEl.open = true; // or false if you want them collapsed by default
+	// detailsEl.open = true; // or false if you want them collapsed by default
 	container.appendChild(detailsEl);
 	
 	const summaryEl = document.createElement("summary");
-	summaryEl.textContent = `Type: ${key}`;
+	summaryEl.textContent = `${key}`;
 	summaryEl.style.fontWeight = "bold";
 	summaryEl.style.marginBottom = "1em";
 	detailsEl.appendChild(summaryEl);
+	const isOpen = detailsEl.open;
+		//refresh();
+		requestAnimationFrame(() => {
+			detailsEl.open = isOpen;
+		});
 	
 	// Main block inside the collapsible
 	const block = document.createElement("div");
 	block.classList.add("heatmap-config-block");
-	detailsEl.appendChild(block);	
+	detailsEl.appendChild(block);
+
+	const rolesContainer = block.createDiv({ cls: "chart-role-fields" });
+	
 
     let colorscaleSetting: Setting;
     let reverseScaleSetting: Setting;
@@ -63,8 +73,10 @@ export async function renderChartSettingsBlock(
 			.setCta()
 			.onClick(async () => {
                 await updateFieldsFromFolder(key, config.folder || "");
+					const updatedFields = Object.keys(config.fields || {});
+					renderChartRoleFields(roleFieldsContainer, config.chartType, config, updatedFields, plugin);
 				await plugin.saveSettings();
-				refresh();
+				//refresh();
 			});
 	});
 
@@ -80,7 +92,9 @@ new Setting(block)
 				config.chartType = val;
 				await plugin.saveSettings();
 				updateAxisVisibility();
-				refresh();
+				const updatedFields = Object.keys(config.fields || {});
+				renderChartRoleFields(roleFieldsContainer, val, config, updatedFields, plugin);
+				//refresh();
 			});
 	});
 
@@ -103,35 +117,7 @@ new Setting(block)
             });
     }
 
-// === X-Axis Field ===
-const xFieldSetting = new Setting(block)
-	.setName("X-Axis Field")
-	.setDesc("Field to use for X-axis")
-	.addDropdown(drop => {
-		Object.keys(config.fields).forEach(field => drop.addOption(field, field));
-		drop.setValue(config.xField || "")
-			.onChange(async val => {
-				config.xField = val;
-				await plugin.saveSettings();
-				refresh();
-			});
-	});
-const xFieldEl = xFieldSetting.settingEl;
-
-// === Y-Axis Field ===
-const yFieldSetting = new Setting(block)
-	.setName("Y-Axis Field")
-	.setDesc("Field to use for Y-axis")
-	.addDropdown(drop => {
-		Object.keys(config.fields).forEach(field => drop.addOption(field, field));
-		drop.setValue(config.yField || "")
-			.onChange(async val => {
-				config.yField = val;
-				await plugin.saveSettings();
-				refresh();
-			});
-	});
-const yFieldEl = yFieldSetting.settingEl;
+const roleFieldsContainer = block.createDiv({ cls: "role-fields-container" });
 
 	new Setting(block)
 		.setName("Top Margin")
@@ -234,7 +220,7 @@ const yFieldEl = yFieldSetting.settingEl;
                     .onChange(async val => {
                         config.colorscale = val;
                         await plugin.saveSettings();
-                        refresh();
+                        //refresh();
                     });
             });
         
@@ -248,7 +234,7 @@ const yFieldEl = yFieldSetting.settingEl;
                     .onChange(async (val) => {
                         config.reverseScale = val;
                         await plugin.saveSettings();
-                        refresh();
+                        //refresh();
                     });
             });
         
@@ -277,43 +263,10 @@ const yFieldEl = yFieldSetting.settingEl;
         }
     );
         
-	const yamlDetailsEl = document.createElement("details");
-	yamlDetailsEl.classList.add("yaml-field-toggle");
-	block.appendChild(yamlDetailsEl); // ✅ Append to the config block, not the container or itself
-	
-	const yamlSummaryEl = document.createElement("summary");
-	yamlSummaryEl.textContent = "Detected YAML Fields";
-	yamlSummaryEl.style.fontWeight = "bold";
-	yamlDetailsEl.appendChild(yamlSummaryEl); // ✅ Proper nesting	
-		// detailsEl.open = true;
 
-if (config.fields && Object.keys(config.fields).length > 0) {
-	const sortedFields = Object.keys(config.fields).sort();
-	for (const field of sortedFields) {
-		const setting = new Setting(detailsEl).setName(field);
+const availableFields = Object.keys(config.fields || {});
+renderChartRoleFields(roleFieldsContainer, config.chartType, config, availableFields, plugin);
 
-		setting.addToggle((toggle: ToggleComponent) => {
-			toggle
-				.setValue(config.fields[field].enabled ?? false)
-				.onChange(async (val) => {
-					config.fields[field].enabled = val;
-					await plugin.saveSettings();
-				});
-		});
-
-		setting.addText((text: TextComponent) => {
-			text
-				.setPlaceholder("Target")
-				.setValue(config.fields[field].rda?.toString() || "")
-				.onChange(async (val) => {
-					const num = Number(val);
-					if (!isNaN(num)) config.fields[field].rda = num;
-					else delete config.fields[field].rda;
-					await plugin.saveSettings();
-				});
-		});
-	}
-}
 		// === Delete Chart Button
 		const deleteSetting = new Setting(block)
 		.setName("Delete Chart")
@@ -333,9 +286,7 @@ if (config.fields && Object.keys(config.fields).length > 0) {
             const isHeatmap = config.chartType === "heatmap";
             const isBarOrLine = config.chartType === "bar" || config.chartType === "line";
             const hasFields = Object.keys(config.fields).length > 0;
-        
-            xFieldEl.style.display = (!isHeatmap && hasFields) ? "" : "none";
-            yFieldEl.style.display = (!isHeatmap && hasFields) ? "" : "none";
+
             chartColorSetting.settingEl.style.display = isBarOrLine ? "" : "none";
             colorscaleSetting.settingEl.style.display = isHeatmap ? "" : "none";
             reverseScaleSetting.settingEl.style.display = isHeatmap ? "" : "none";

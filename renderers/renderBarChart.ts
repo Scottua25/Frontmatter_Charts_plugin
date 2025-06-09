@@ -5,16 +5,17 @@ import { getDataMap } from "../src/dataUtils";
 
 export default function renderBarChart(app: App, el: HTMLElement, type: string, settings: HeatmapSettings): void {
 	const config = settings.heatmapTypes[type];
-	if (!config || !config.xField || !config.yField) {
-		el.createEl("div", { text: "Missing bar chart configuration." });
-		return;
-	}
+    if (!config || !config.x || !config.y) {
+        el.createEl("div", { text: "Missing bar chart configuration." });
+        return;
+    }
+    
 
 	const dataMap = getDataMap(app, config);
 	const dates = Object.keys(dataMap).sort().slice(-config.limitDays || undefined);
 
-	const x = dates;
-	const y = dates.map(date => dataMap[date]?.[config.yField!] ?? 0);
+	const x = dates.map(date => dataMap[date]?.[config.x] ?? date);
+	const y = dates.map(date => dataMap[date]?.[config.y] ?? 0);
 
 	const data = [{
 		x,

@@ -53,11 +53,11 @@ if (prod) {
 	copyFileSync("manifest.json", resolve("dist", "manifest.json"));
 
 	// Optional: copy styles.css if it exists
-	//try {
-	//	copyFileSync("styles.css", resolve("dist", "styles.css"));
-	//} catch (err) {
+	try {
+		copyFileSync("styles.css", resolve("dist", "styles.css"));
+	} catch (err) {
 	// It's fine if styles.css doesn't exist
-	//}
+	}
 	
 	process.exit(0);
 } else {
