@@ -79,6 +79,8 @@ Built with:
 This project originated from the [Obsidian Sample Plugin](https://github.com/obsidianmd/obsidian-sample-plugin) and was extensively expanded to support advanced data visualization use cases inside Obsidian.
 ## ❤️ Support
 
+![License: GPLv3](https://img.shields.io/badge/License-GPLv3-blue.svg)
+
 If this plugin helps improve your Obsidian workflow, consider showing support:
 
 [Buy Me a Coffee ☕](https://buymeacoffee.com/scottua)
