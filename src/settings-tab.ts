@@ -10,7 +10,7 @@ import {
 	MarkdownView,
 	ButtonComponent
 } from "obsidian";
-import type HeatmapDashboardPlugin from "../main";
+import type ChartDashboardPlugin from "../main";
 import { renderChartSettingsBlock } from "./chartSettingsBlock";
 
 export class HeatmapSettingTab extends PluginSettingTab {
@@ -30,7 +30,7 @@ export class HeatmapSettingTab extends PluginSettingTab {
 			}
 		}		
 
-		const config = this.plugin.settings.heatmapTypes[key];
+		const config = this.plugin.settings.chartTypes[key];
 		config.fields = {};
 		props.forEach(p => {
 			config.fields[p] = { enabled: true };
@@ -46,9 +46,9 @@ export class HeatmapSettingTab extends PluginSettingTab {
 		}
 	}
 
-	plugin: HeatmapDashboardPlugin;
+	plugin: ChartDashboardPlugin;
 
-	constructor(app: App, plugin: HeatmapDashboardPlugin) {
+	constructor(app: App, plugin: ChartDashboardPlugin) {
 		super(app, plugin);
 		this.plugin = plugin;
 	}
@@ -62,7 +62,7 @@ export class HeatmapSettingTab extends PluginSettingTab {
 		h3.textContent = "Charts";
 		container.appendChild(h3);
 
-		for (const [key, config] of Object.entries(this.plugin.settings.heatmapTypes)) {
+		for (const [key, config] of Object.entries(this.plugin.settings.chartTypes)) {
 			await renderChartSettingsBlock(
 				this.app,
 				this.plugin,
@@ -73,7 +73,7 @@ export class HeatmapSettingTab extends PluginSettingTab {
 				this.updateFieldsFromFolder.bind(this) 
 			);
 		}
-		// === Add New Heatmap Type UI ===
+		// === Add New Chart Type UI ===
 		new Setting(this.containerEl)
 			.setName("Add New Chart")
 			.setDesc("Unique code block name (e.g., nutrients). This will be used to insert the chart into a note.")
@@ -85,9 +85,9 @@ export class HeatmapSettingTab extends PluginSettingTab {
 			.addButton((btn) => {
 				btn.setButtonText("Add").onClick(async () => {
 					const name = this._newHeatmapTypeName;
-					if (!name || this.plugin.settings.heatmapTypes[name]) return;
+					if (!name || this.plugin.settings.chartTypes[name]) return;
 
-					this.plugin.settings.heatmapTypes[name] = {
+					this.plugin.settings.chartTypes[name] = {
 						fields: {},
 						folder: "",
 						limitDays: 0,

@@ -8,15 +8,16 @@ import {
 	TFile,
 	parseYaml
 } from "obsidian";
-import type HeatmapDashboardPlugin from "../main";
+import type ChartDashboardPlugin from "../main";
 import { parseRGBA, rgbToHex, hexToRgb, addColorWithAlphaSetting, addInlineColorPicker } from "./colorUtils";
 import { chartRoleDefinitions } from "./chartRoles";
 import { renderChartRoleFields } from "../renderers/renderChartRoleFields";
+import { chartRendererMap } from "../src/chartRendererMap";
 
 // Must be async because we use await inside
 export async function renderChartSettingsBlock(
 	app: App,
-	plugin: HeatmapDashboardPlugin,
+	plugin: ChartDashboardPlugin,
 	container: HTMLElement,
 	key: string,
 	config: any,
@@ -85,8 +86,10 @@ new Setting(block)
 	.setName("Chart Type")
 	.setDesc("Select chart visualization")
 	.addDropdown(drop => {
-		const options = ["heatmap", "bar", "line"];
-		options.forEach(o => drop.addOption(o, o));
+		const chartTypes = Object.keys(chartRendererMap);
+		chartTypes.forEach(type =>
+			drop.addOption(type, type.charAt(0).toUpperCase() + type.slice(1))
+		);
 		drop.setValue(config.chartType || "heatmap")
 			.onChange(async (val) => {
 				config.chartType = val;
@@ -275,7 +278,7 @@ renderChartRoleFields(roleFieldsContainer, config.chartType, config, availableFi
 			btn.setButtonText("Delete")
 				.setWarning()
 				.onClick(async () => {
-					delete plugin.settings.heatmapTypes[key];
+					delete plugin.settings.chartTypes[key];
 					await plugin.saveSettings();
 					refresh();
 				})

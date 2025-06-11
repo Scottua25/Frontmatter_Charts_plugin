@@ -58,6 +58,13 @@ if (prod) {
 	} catch (err) {
 	// It's fine if styles.css doesn't exist
 	}
+
+	// Optional: copy README.md if it exists
+	try {
+		copyFileSync("README.md", resolve("dist", "README.md"));
+	} catch (err) {
+	// It's fine if README.md doesn't exist
+	}
 	
 	process.exit(0);
 } else {

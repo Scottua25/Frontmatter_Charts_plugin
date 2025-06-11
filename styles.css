@@ -45,9 +45,10 @@ If your plugin does not need CSS, delete this file.
 
 .role-field-row {
 	display: grid;
-	grid-template-columns: auto 150px 40px 40px 40px 100px;
+	grid-template-columns: 40px 120px 60px 60px 60px 100px;
 	align-items: center;
 	gap: 6px;
+	min-height: 36px;
 }
 
 .role-field-label {

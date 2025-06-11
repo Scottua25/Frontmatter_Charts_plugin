@@ -1,6 +1,6 @@
 import { App, Plugin } from "obsidian";
 import { chartRendererMap } from "./src/chartRendererMap";
-import { DEFAULT_SETTINGS, HeatmapSettings } from "./src/settings";
+import { DEFAULT_SETTINGS, ChartSettings } from "./src/settings";
 import { HeatmapSettingTab } from "./src/settings-tab";
 //import "./styles.css";
 import { validateChartRoles } from "src/validateChartRoles";
@@ -19,8 +19,8 @@ declare global {
 	}
 }
 
-function renderChart(app: App, el: HTMLElement, type: string, settings: HeatmapSettings) {
-	const config = settings.heatmapTypes[type];
+function renderChart(app: App, el: HTMLElement, type: string, settings: ChartSettings) {
+	const config = settings.chartTypes[type];
 	if (!config) {
 	  el.createEl("div", { text: "No config found for chart type: " + type });
 	  return;
@@ -44,8 +44,8 @@ function renderChart(app: App, el: HTMLElement, type: string, settings: HeatmapS
 	renderer(app, el, type, settings);
   }
   
-  export default class HeatmapDashboardPlugin extends Plugin {
-	settings!: HeatmapSettings;
+  export default class ChartDashboardPlugin extends Plugin {
+	settings!: ChartSettings;
 
 	async onload() {
 		console.log("Loading Heatmap Dashboard Plugin");
@@ -56,7 +56,7 @@ function renderChart(app: App, el: HTMLElement, type: string, settings: HeatmapS
 		// Register a single code block processor for all charts
 		this.registerMarkdownCodeBlockProcessor("insert-chart", async (source, el) => {
 			const chartKey = source.trim().split("\n")[0].trim();
-			const config = this.settings.heatmapTypes[chartKey];
+			const config = this.settings.chartTypes[chartKey];
 
 			if (!config || !config.chartType || !(config.chartType in chartRendererMap)) {
 				el.createEl("div", { text: `Missing or invalid chart config for '${chartKey}'` });

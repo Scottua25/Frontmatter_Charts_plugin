@@ -1,9 +1,9 @@
 {
-	"id": "heatmap-dashboard",
-	"name": "Heatmap Dashboard",
+	"id": "frontmatter-charts",
+	"name": "Frontmatter Charts",
 	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
-	"description": "Generates heatmaps from frontmatter values to visualize habit tracking trends.",
+	"description": "Generates charts from frontmatter values to visualize habit tracking trends.",
 	"author": "Scottua",
 	"authorUrl": "https://github.com/Scottua",
 	"fundingUrl": "https://www.buymeacoffee.com/scottua",

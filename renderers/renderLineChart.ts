@@ -1,10 +1,10 @@
 import Plotly from "plotly.js-dist-min";
 import { App } from "obsidian";
-import { HeatmapSettings } from "../src/settings";
+import { ChartSettings } from "../src/settings";
 import { getDataMap } from "../src/dataUtils";
 
-export default function renderLineChart(app: App, el: HTMLElement, type: string, settings: HeatmapSettings): void {
-	const config = settings.heatmapTypes[type];
+export default function renderLineChart(app: App, el: HTMLElement, type: string, settings: ChartSettings): void {
+	const config = settings.chartTypes[type];
     if (!config || !config.x || !config.y) {
         el.createEl("div", { text: "Missing bar chart configuration." });
         return;

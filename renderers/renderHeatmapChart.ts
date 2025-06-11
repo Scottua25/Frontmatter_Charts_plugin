@@ -1,15 +1,15 @@
 import { App } from "obsidian";
 import Plotly from "plotly.js-dist-min";
 import { getDataMap } from "../src/dataUtils";
-import type { HeatmapSettings } from "../src/settings";
+import type { ChartSettings } from "../src/settings";
 
 export default function renderHeatmapChart(
 	app: App,
 	el: HTMLElement,
 	type: string,
-	settings: HeatmapSettings
+	settings: ChartSettings
 ): void {
-	const config = settings.heatmapTypes[type];
+	const config = settings.chartTypes[type];
 	if (!config || !config.fields) {
 		el.createEl("div", { text: "Heatmap config missing." });
 		return;
