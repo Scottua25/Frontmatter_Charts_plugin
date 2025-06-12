@@ -42,7 +42,28 @@ export async function renderChartSettingsBlock(
 	detailsEl.appendChild(block);
 
 	const rolesContainer = block.createDiv({ cls: "chart-role-fields" });
+
+    let roleFieldsContainer: HTMLElement;
 	
+    function updateRoleFields() {
+        const updatedFields = Object.keys(config.fields || {});
+        const scrollTop = roleFieldsContainer.scrollTop;
+    
+        renderChartRoleFields(
+            roleFieldsContainer,
+            config.chartType,
+            config,
+            updatedFields,
+            plugin,
+            updateRoleFields // Pass itself for re-renders from inside roleFields
+        );
+    
+        requestAnimationFrame(() => {
+            roleFieldsContainer.scrollTop = scrollTop;
+        });
+    }
+    
+    roleFieldsContainer = block.createDiv({ cls: "role-fields-container" });
 
     let colorscaleSetting: Setting;
     let reverseScaleSetting: Setting;
@@ -69,8 +90,8 @@ export async function renderChartSettingsBlock(
 			.setCta()
 			.onClick(async () => {
                 await updateFieldsFromFolder(key, config.folder || "");
-					const updatedFields = Object.keys(config.fields || {});
-					renderChartRoleFields(roleFieldsContainer, config.chartType, config, updatedFields, plugin);
+                updateRoleFields();
+
 				await plugin.saveSettings();
 				//refresh();
 			});
@@ -90,8 +111,7 @@ new Setting(block)
 				config.chartType = val;
 				await plugin.saveSettings();
 				updateAxisVisibility();
-				const updatedFields = Object.keys(config.fields || {});
-				renderChartRoleFields(roleFieldsContainer, val, config, updatedFields, plugin);
+				updateRoleFields();
                 (chartStyleDropdown as any)?._updateStyleOptions?.();
 				//refresh();
 			});
@@ -125,8 +145,7 @@ const styleSetting = new Setting(block)
     drop.onChange(async val => {
       config.chartStyle = val;
       await plugin.saveSettings();
-      const updatedFields = Object.keys(config.fields || {});
-      renderChartRoleFields(roleFieldsContainer, config.chartType, config, updatedFields, plugin);
+      updateRoleFields();
     });
 
     // Save update function so we can call it later
@@ -152,7 +171,7 @@ const styleSetting = new Setting(block)
             });
     }
 
-const roleFieldsContainer = block.createDiv({ cls: "role-fields-container" });
+roleFieldsContainer = block.createDiv({ cls: "role-fields-container" });
 
 	new Setting(block)
 		.setName("Top Margin")
@@ -299,8 +318,9 @@ const roleFieldsContainer = block.createDiv({ cls: "role-fields-container" });
     );
         
 
-const availableFields = Object.keys(config.fields || {});
-renderChartRoleFields(roleFieldsContainer, config.chartType, config, availableFields, plugin);
+ updateRoleFields();
+
+
 
 		// === Delete Chart Button
 		const deleteSetting = new Setting(block)

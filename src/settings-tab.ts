@@ -27,10 +27,18 @@ export class HeatmapSettingTab extends PluginSettingTab {
 		}		
 
 		const config = this.plugin.settings.chartTypes[key];
-		config.fields = {};
-		props.forEach(p => {
-			config.fields[p] = { enabled: true };
+		const oldFields = config.fields || {};
+		const newFields: Record<string, any> = {};
+
+		props.forEach((p) => {
+			newFields[p] = {
+				...oldFields[p],                            // Preserve existing settings
+				enabled: oldFields[p]?.enabled ?? true,     // Default to true if new
+			};
 		});
+
+		config.fields = newFields;
+
 	}
 
 	private _newHeatmapTypeName: string = "";

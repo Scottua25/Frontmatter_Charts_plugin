@@ -11,7 +11,8 @@ export function renderChartRoleFields(
 	chartType: string,
 	config: any,
 	availableFields: string[],
-	plugin: { saveSettings: () => Promise<void> }
+	plugin: { saveSettings: () => Promise<void> },
+    forceRerender?: () => void
 ): void {
 
 	// Clear previous render
@@ -64,6 +65,7 @@ export function renderChartRoleFields(
 			box.type = roleMeta.single ? "radio" : "checkbox";
 			box.name = roleMeta.single ? `role-${roleKey}` : `${field}-role-${roleKey}`;
 			box.checked = roleAssignments[roleKey].includes(field);
+            box.id = `role-${roleKey}-${field}`;
 
             box.addEventListener("change", async (event: Event) => {
                 if (!event?.target) return;
@@ -108,9 +110,21 @@ export function renderChartRoleFields(
                 
                 await plugin.saveSettings();
 
-                // Re-render to update UI elements like color pickers
-                const updatedFields = Object.keys(config.fields || {});
-                renderChartRoleFields(container, chartType, config, updatedFields, plugin);
+                // Only re-render if needed
+                if (["y", "z", "value", "size"].includes(roleKey)) {
+                    const activeId = (document.activeElement as HTMLElement)?.id;
+
+                    forceRerender?.();
+
+                    // After DOM is updated, restore focus
+                    requestAnimationFrame(() => {
+                        if (activeId) {
+                            const el = document.getElementById(activeId);
+                            if (el) el.focus();
+                        }
+                    });
+                }
+
             });
                   
 			const label = document.createElement("label");

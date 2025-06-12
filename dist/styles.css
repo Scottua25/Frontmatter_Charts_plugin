@@ -65,3 +65,23 @@ If your plugin does not need CSS, delete this file.
 .role-field-row input[type="text"] {
 	width: 80px;
 }
+
+.color-chart-picker {
+	margin-left: 8px;
+	margin-right: 0.5em;
+}
+
+.chart-summary-header {
+	font-weight: bold;
+	margin-bottom: 1em;
+}
+
+.alpha-range-slider {
+	width: 100px;
+	vertical-align: middle;
+}
+
+.inline-color-picker {
+	margin-left: 8px;
+	vertical-align: middle;
+}
