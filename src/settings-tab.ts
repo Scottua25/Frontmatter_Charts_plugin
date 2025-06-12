@@ -7,7 +7,9 @@ import {
 	MarkdownView
 } from "obsidian";
 import type ChartDashboardPlugin from "../main";
-import { renderChartSettingsBlock } from "./chartSettingsBlock";
+//import { renderChartSettingsBlock } from "./chartSettingsBlock"; // monolithic ui configuration file
+import { renderChartSettingsBlock } from "../renderers/renderChartSettingsBlock"; // modularized configuration
+
 
 export class HeatmapSettingTab extends PluginSettingTab {
 	private async updateFieldsFromFolder(key: string, folderPath: string) {
