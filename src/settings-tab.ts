@@ -2,13 +2,9 @@ import {
 	App,
 	PluginSettingTab,
 	Setting,
-	ToggleComponent,
-	TextComponent,
 	TFolder,
 	TFile,
-	parseYaml,
-	MarkdownView,
-	ButtonComponent
+	MarkdownView
 } from "obsidian";
 import type ChartDashboardPlugin from "../main";
 import { renderChartSettingsBlock } from "./chartSettingsBlock";
@@ -55,7 +51,9 @@ export class HeatmapSettingTab extends PluginSettingTab {
 
 	async display(): Promise<void> {
 		const container = this.containerEl;
-		container.innerHTML = "";
+		while (container.firstChild) {
+			container.removeChild(container.firstChild);
+		}		
 		container.createEl("h1", { text: "Chart Settings" });	
 
 		const h3 = document.createElement("h3");

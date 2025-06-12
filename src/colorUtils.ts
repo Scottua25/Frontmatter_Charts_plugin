@@ -44,7 +44,7 @@ export function addColorWithAlphaSetting(
 	const colorInput = document.createElement("input");
 	colorInput.type = "color";
 	colorInput.value = rgbToHex(r, g, b);
-	colorInput.style.marginRight = "0.5em";
+	colorInput.classList.add("color-chart-picker");
 	wrapper.appendChild(colorInput);
 
 	const alphaInput = document.createElement("input");
@@ -53,7 +53,7 @@ export function addColorWithAlphaSetting(
 	alphaInput.max = "1";
 	alphaInput.step = "0.01";
 	alphaInput.value = a.toString();
-	alphaInput.style.width = "100px";
+	alphaInput.classList.add("alpha-range-slider");
 	wrapper.appendChild(alphaInput);
 
 	const alphaLabel = document.createElement("span");
@@ -99,8 +99,7 @@ export function addInlineColorPicker(
 	})();
 
 	colorInput.value = rgbHex;
-	colorInput.style.marginLeft = "8px";
-	colorInput.style.verticalAlign = "middle";
+	colorInput.classList.add("inline-color-picker");
 	colorInput.addEventListener("input", () => onChange(colorInput.value));
 	settingEl.appendChild(colorInput);
 }

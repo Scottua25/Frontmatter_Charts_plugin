@@ -27,8 +27,8 @@ export const chartRoleDefinitions = {
 
 	pie: {
 		roles: {
-			labels: { label: "Labels (Categories)", single: true },
-			values: { label: "Values (Sizes)", single: true }
+			//labels: { label: "Labels (Categories)", single: true },
+			//values: { label: "Values (Sizes)", single: true }
 		},
 		options: ["chartColor"]
 	},

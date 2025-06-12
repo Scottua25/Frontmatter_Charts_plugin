@@ -1,10 +1,11 @@
 export interface ChartFieldConfig {
 	enabled: boolean;
-	rda?: number;
+	target?: number;
 }
 export interface FieldConfig {
 	enabled: boolean;
-	rda?: number;
+	target?: number;
+	color?: string;
 }
 
 export interface ChartTypeConfig {
@@ -72,4 +73,12 @@ export const DEFAULT_SETTINGS: ChartSettings = {
 	opacity: 1.0
 };
 
+	// == Chart Styles Definitions ==
+export const CHART_STYLES: Record<string, string[]> = {
+	bar: ["vertical", "horizontal", "stacked", "grouped", "overlay"],
+	line: ["basic", "line+markers", "scatter", "stepped"],
+	pie: ["pie", "donut"],
+	heatmap: ["standard", "symmetric", "log"],
+  };
+  
 

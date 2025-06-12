@@ -1,18 +1,14 @@
 import {
 	App,
 	Setting,
-	ToggleComponent,
-	TextComponent,
 	ButtonComponent,
-	TFolder,
-	TFile,
-	parseYaml
+    DropdownComponent
 } from "obsidian";
 import type ChartDashboardPlugin from "../main";
-import { parseRGBA, rgbToHex, hexToRgb, addColorWithAlphaSetting, addInlineColorPicker } from "./colorUtils";
-import { chartRoleDefinitions } from "./chartRoles";
+import { addColorWithAlphaSetting, addInlineColorPicker } from "./colorUtils";
 import { renderChartRoleFields } from "../renderers/renderChartRoleFields";
 import { chartRendererMap } from "../src/chartRendererMap";
+import { CHART_STYLES } from "../src/settings";
 
 // Must be async because we use await inside
 export async function renderChartSettingsBlock(
@@ -32,8 +28,7 @@ export async function renderChartSettingsBlock(
 	
 	const summaryEl = document.createElement("summary");
 	summaryEl.textContent = `${key}`;
-	summaryEl.style.fontWeight = "bold";
-	summaryEl.style.marginBottom = "1em";
+	summaryEl.classList.add("chart-summary-header");
 	detailsEl.appendChild(summaryEl);
 	const isOpen = detailsEl.open;
 		//refresh();
@@ -97,9 +92,46 @@ new Setting(block)
 				updateAxisVisibility();
 				const updatedFields = Object.keys(config.fields || {});
 				renderChartRoleFields(roleFieldsContainer, val, config, updatedFields, plugin);
+                (chartStyleDropdown as any)?._updateStyleOptions?.();
 				//refresh();
 			});
 	});
+
+// === Chart Style Dropdown ===
+let chartStyleDropdown: DropdownComponent;
+
+const styleSetting = new Setting(block)
+  .setName("Chart Style")
+  .setDesc("Substyle of the selected chart type")
+  .addDropdown(drop => {
+    chartStyleDropdown = drop;
+
+    const updateStyleOptions = () => {
+        while (drop.selectEl.firstChild) {
+            drop.selectEl.removeChild(drop.selectEl.firstChild);
+        }        
+      const styles = CHART_STYLES[config.chartType] || [];
+      styles.forEach(style => {
+        drop.addOption(style, style.charAt(0).toUpperCase() + style.slice(1));
+      });
+
+      const current = config.chartStyle || styles[0] || "";
+      drop.setValue(current);
+      config.chartStyle = current;
+    };
+
+    updateStyleOptions();
+
+    drop.onChange(async val => {
+      config.chartStyle = val;
+      await plugin.saveSettings();
+      const updatedFields = Object.keys(config.fields || {});
+      renderChartRoleFields(roleFieldsContainer, config.chartType, config, updatedFields, plugin);
+    });
+
+    // Save update function so we can call it later
+    (drop as any)._updateStyleOptions = updateStyleOptions;
+  }); 
 
     // === Heatmap Cell Height ===
     if (config.chartType === "heatmap") {

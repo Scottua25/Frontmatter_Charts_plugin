@@ -1,5 +1,5 @@
 
-import { Setting, ToggleComponent, TextComponent } from "obsidian";
+import { ToggleComponent, TextComponent } from "obsidian";
 import { chartRoleDefinitions } from "../src/chartRoles";
 
 /**
@@ -15,7 +15,10 @@ export function renderChartRoleFields(
 ): void {
 
 	// Clear previous render
-	container.innerHTML = "";
+	while (container.firstChild) {
+        container.removeChild(container.firstChild);
+    }
+    
 
 	const roleDef = chartRoleDefinitions[chartType as keyof typeof chartRoleDefinitions];
 	if (!roleDef || !roleDef.roles) return;
@@ -88,13 +91,13 @@ export function renderChartRoleFields(
                             const input = new TextComponent(row);
                             input.inputEl.classList.add("role-field-target");
                             input.setPlaceholder("Target");
-                            input.setValue(config.fields?.[field]?.rda?.toString() || "");
+                            input.setValue(config.fields?.[field]?.target?.toString() || "");
                             input.onChange(async (val) => {
                                 if (!config.fields) config.fields = {};
                                 if (!config.fields[field]) config.fields[field] = {};
                                 const num = Number(val);
-                                if (!isNaN(num)) config.fields[field].rda = num;
-                                else delete config.fields[field].rda;
+                                if (!isNaN(num)) config.fields[field].target = num;
+                                else delete config.fields[field].target;
                                 await plugin.saveSettings();
                             });
                         }
@@ -104,6 +107,10 @@ export function renderChartRoleFields(
                 }
                 
                 await plugin.saveSettings();
+
+                // Re-render to update UI elements like color pickers
+                const updatedFields = Object.keys(config.fields || {});
+                renderChartRoleFields(container, chartType, config, updatedFields, plugin);
             });
                   
 			const label = document.createElement("label");
@@ -112,18 +119,37 @@ export function renderChartRoleFields(
 			row.appendChild(label);
 		});
 
+                // Conditionally show a color picker if the field is a Y-axis field and we're in a line chart
+                if ((chartType === "line" || chartType === "bar") && roleAssignments["y"].includes(field)) {
+            const colorInput = document.createElement("input");
+            colorInput.type = "color";
+            colorInput.value = config.fields?.[field]?.color || "#ff9900";
+            colorInput.classList.add("color-chart-picker")
+            colorInput.title = "Line/marker color";
+
+            colorInput.addEventListener("input", async (e) => {
+                const val = (e.target as HTMLInputElement).value;
+                if (!config.fields) config.fields = {};
+                if (!config.fields[field]) config.fields[field] = {};
+                config.fields[field].color = val;
+                await plugin.saveSettings();
+            });
+
+            row.appendChild(colorInput);
+        }
+
         const wasAssignedToZ = roleAssignments["z"]?.includes(field);
             if (wasAssignedToZ) {
                 const input = new TextComponent(row);
                 input.inputEl.classList.add("role-field-target");
                 input.setPlaceholder("Target");
-                input.setValue(config.fields?.[field]?.rda?.toString() || "");
+                input.setValue(config.fields?.[field]?.target?.toString() || "");
                 input.onChange(async (val) => {
                     if (!config.fields) config.fields = {};
                     if (!config.fields[field]) config.fields[field] = {};
                     const num = Number(val);
-                    if (!isNaN(num)) config.fields[field].rda = num;
-                    else delete config.fields[field].rda;
+                    if (!isNaN(num)) config.fields[field].target = num;
+                    else delete config.fields[field].target;
                     await plugin.saveSettings();
                 });
             }

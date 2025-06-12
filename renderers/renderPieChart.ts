@@ -40,8 +40,10 @@ export default function renderPieChart(
   const labels = Object.keys(totals);
   const values = labels.map(label => totals[label]);
 
+  const isDonut = config.chartStyle === "donut";
   const trace: Partial<Plotly.PieData> = {
     type: "pie",
+    hole: isDonut ? 0.4 : 0,
     labels,
     values,
     textinfo: "label+percent",

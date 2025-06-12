@@ -22,21 +22,26 @@ export default function renderHeatmapChart(
 
 	const fields = Object.keys(config.fields).filter(k => config.fields[k].enabled);
 
-	const z: number[][] = fields.map(field =>
-		dates.map(date => {
-			const val = dataMap[date]?.[field] ?? 0;
-			const rda = config.fields[field]?.rda ?? 1;
-			return Math.round((val / rda) * 100);
-		})
-	);
+	const z: number[][] = fields.map(field => {
+		const row = dates.map(date => {
+			const rawVal = dataMap[date]?.[field];
+			const val = typeof rawVal === "number" ? rawVal : Number(rawVal);
+			const target = config.fields[field]?.target ?? config.fields[field]?.target ?? 1;
+			const pct = target > 0 ? Math.round((val / target) * 100) : 0;
+	
+			// console.log(`[HEATMAP] field=${field}, date=${date}, val=${val}, target=${target}, pct=${pct}`);
+			return pct;
+		});
+		return row;
+	});	
 
     const annotations: Partial<Plotly.Annotations>[] = [];
 
 	fields.forEach((field, rowIdx) => {
 		dates.forEach((date, colIdx) => {
 			const val = dataMap[date]?.[field] ?? 0;
-			const rda = config.fields[field]?.rda ?? 1;
-			const pct = (val / rda) * 100;
+			const target = config.fields[field]?.target ?? 1;
+			const pct = (val / target) * 100;
 			if (pct > 100) {
 				annotations.push({
 					x: date,

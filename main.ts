@@ -2,7 +2,6 @@ import { App, Plugin } from "obsidian";
 import { chartRendererMap } from "./src/chartRendererMap";
 import { DEFAULT_SETTINGS, ChartSettings } from "./src/settings";
 import { HeatmapSettingTab } from "./src/settings-tab";
-//import "./styles.css";
 import { validateChartRoles } from "src/validateChartRoles";
 
 declare global {

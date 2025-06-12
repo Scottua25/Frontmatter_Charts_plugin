@@ -15,23 +15,46 @@ export default function renderLineChart(app: App, el: HTMLElement, type: string,
 	const dates = Object.keys(dataMap).sort().slice(-config.limitDays || undefined);
 
 	const x = dates.map(date => dataMap[date]?.[config.x] ?? date);
-	const y = dates.map(date => dataMap[date]?.[config.y] ?? 0);
+	const yFields = Array.isArray(config.y) ? config.y : [config.y];
 
-
-	const data = [{
-		x,
-		y,
-		type: 'scatter',
-		mode: 'lines+markers',
-		line: {
-			color: config.chartColor || '#ff9900',
-			width: 2
-		},
-		marker: {
-			color: config.chartColor || '#ff9900',
-			size: 6
+	const data = yFields.map((yField) => {
+		const y = dates.map(date => dataMap[date]?.[yField] ?? 0);
+		const color = config.fields?.[yField]?.color || '#ff9900';
+	
+		let mode = "lines";
+		let shape: "linear" | "hv" | undefined = undefined;
+	
+		switch (config.chartStyle) {
+			case "scatter":
+				mode = "markers";
+				break;
+			case "line+markers":
+				mode = "lines+markers";
+				break;
+			case "stepped":
+				mode = "lines";
+				shape = "hv";
+				break;
 		}
-	}];
+	
+		return {
+			x,
+			y,
+			name: yField,
+			type: "scatter",
+			mode,
+			line: {
+				color,
+				width: 2,
+				...(shape ? { shape } : {})
+			},
+			marker: {
+				color,
+				size: 6
+			}
+		};
+	});
+	
 
 	const layout = {
 		title: `Line Chart: ${type}`,
