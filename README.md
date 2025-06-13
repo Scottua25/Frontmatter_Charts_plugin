@@ -18,11 +18,12 @@ This plugin visualizes your YAML frontmatter data as dynamic charts — perfect 
 1. Clone this repo or download the latest release.
 2. Copy `main.js`, `manifest.json`, and `styles.css` into:
 
-   ```
+    ````markdown
 
-   <your-vault>/.obsidian/plugins/frontmatter-charts/
-
-   ```
+    ```<your-vault>/.obsidian/plugins/frontmatter-charts/
+    ```
+    
+    ````
 
 3. Enable the plugin in Obsidian's settings under **Community Plugins**.
 

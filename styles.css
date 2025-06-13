@@ -85,3 +85,8 @@ If your plugin does not need CSS, delete this file.
 	margin-left: 8px;
 	vertical-align: middle;
 }
+
+.property-color-picker {
+	margin-left: 8px;
+	vertical-align: middle;
+}
