@@ -23,14 +23,14 @@ export function renderColorSettings(
 		}
 	);
 
-	if (!isHeatmap) {
+	if (isHeatmap) {
 		addColorWithAlphaSetting(
 			block,
 			"Chart Area Background",
 			"Color behind bars/lines inside the chart box.",
-			config.backgroundPageColor || "rgba(0,0,0,0)",
+			config.backgroundChartColor || "rgba(0,0,0,0)",
 			async (val) => {
-				config.backgroundPageColor = val;
+				config.backgroundChartColor = val;
 				await plugin.saveSettings();
 			}
 		);
@@ -67,7 +67,7 @@ export function renderColorSettings(
 			});
 	}
 
-	if (isBarOrLine) {
+	if (isBarOrLine || isHeatmap) {
 		const chartColorSetting = new Setting(block)
 			.setName("Chart Color")
 			.setDesc("Primary color for bar or line charts")

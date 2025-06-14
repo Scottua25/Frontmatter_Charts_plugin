@@ -2,6 +2,7 @@ import { App } from "obsidian";
 import Plotly from "plotly.js-dist-min";
 import { getDataMap } from "../src/dataUtils";
 import type { ChartSettings } from "../src/settings";
+import { getSortedFields } from "../src/helpers/sortFields";
 
 export default function renderHeatmapChart(
 	app: App,
@@ -20,42 +21,62 @@ export default function renderHeatmapChart(
 	const limit = config.limitDays ?? 0;
 	if (limit > 0) dates = dates.slice(-limit);
 
-	const fields = Object.keys(config.fields).filter(k => config.fields[k].enabled);
+const allFields = Object.keys(config.fields ?? {});
+	const enabledFields = allFields.filter(k => config.fields[k]?.enabled);
+	const fields = getSortedFields(enabledFields, config, true);
+
+	if (!fields.length) {
+		el.createEl("div", { text: "No enabled fields to render." });
+		console.warn("[HEATMAP] Skipping render — no enabled fields.", { config });
+		return;
+	}
+
+	if (!dates.length) {
+		el.createEl("div", { text: "No date data available." });
+		console.warn("[HEATMAP] Skipping render — no dates.");
+		return;
+	}
 
 	const z: number[][] = fields.map(field => {
 		const row = dates.map(date => {
 			const rawVal = dataMap[date]?.[field];
 			const val = typeof rawVal === "number" ? rawVal : Number(rawVal);
-			const target = config.fields[field]?.target ?? config.fields[field]?.target ?? 1;
+			const target = config.fields[field]?.target ?? 1;
 			const pct = target > 0 ? Math.round((val / target) * 100) : 0;
-	
-			// console.log(`[HEATMAP] field=${field}, date=${date}, val=${val}, target=${target}, pct=${pct}`);
 			return pct;
 		});
 		return row;
-	});	
-
-    const annotations: Partial<Plotly.Annotations>[] = [];
-
-	fields.forEach((field, rowIdx) => {
-		dates.forEach((date, colIdx) => {
-			const val = dataMap[date]?.[field] ?? 0;
-			const target = config.fields[field]?.target ?? 1;
-			const pct = (val / target) * 100;
-			if (pct > 100) {
-				annotations.push({
-					x: date,
-					y: field,
-					text: "X",
-					showarrow: false,
-					font: {
-						color: config.fontColor || "#000",
-						size: config.fontSize || 12,
-					}
-				});
-			}
-		});
 	});
+
+console.debug("[HEATMAP] Rendering chart", { fields, dates, z });
+
+const annotations: Partial<Plotly.Annotations>[] = [];
+
+fields.forEach((field, rowIdx) => {
+	if (typeof field !== "string" || !(field in config.fields)) return;
+
+	dates.forEach((date, colIdx) => {
+		const rawVal = dataMap[date]?.[field];
+		const val = typeof rawVal === "number" ? rawVal : Number(rawVal);
+		if (isNaN(val)) return;
+
+		const target = config.fields[field]?.target ?? 1;
+		const pct = target > 0 ? (val / target) * 100 : 0;
+
+		if (pct > 100) {
+			annotations.push({
+				x: date,
+				y: field,
+				text: "X",
+				showarrow: false,
+				font: {
+					color: config.fontColor || "#000",
+					size: config.fontSize || 12,
+				}
+			});
+		}
+	});
+});
 
 	const cellHeight = Math.max(10, Math.min(100, config.cellHeight ?? 30));
 

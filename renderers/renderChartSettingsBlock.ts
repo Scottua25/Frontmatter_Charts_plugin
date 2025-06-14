@@ -13,6 +13,7 @@ import { renderFontSettings } from "../src/settings-sections/fontSettings";
 import { renderColorSettings } from "../src/settings-sections/colorSettings";
 import { renderChartRoleFields } from "../renderers/renderChartRoleFields";
 import { renderDeleteChartSetting } from "../src/settings-sections/deleteChartSetting";
+import { renderSortOrderSetting } from "../src/settings-sections/sortOrderSettings";
 
 // Main exported function
 export async function renderChartSettingsBlock(
@@ -47,6 +48,10 @@ export async function renderChartSettingsBlock(
 
 	function updateRoleFields() {
 		const updatedFields = Object.keys(config.fields || {});
+if (!Array.isArray(updatedFields)) {
+	console.error("Invalid updatedFields:", updatedFields);
+	return;
+}
 		const scrollTop = roleFieldsContainer.scrollTop;
 
 		renderChartRoleFields(
@@ -67,6 +72,7 @@ export async function renderChartSettingsBlock(
 	renderFolderSetting(block, config, plugin, key, updateFieldsFromFolder, updateRoleFields);
 	renderChartTypeSetting(block, config, plugin, updateRoleFields);
 	renderChartStyleSetting(block, config, plugin, updateRoleFields);
+	renderSortOrderSetting(block, config, plugin.saveSettings.bind(plugin), updateRoleFields);
 	renderHeatmapSettings(block, config, plugin);
 
     const rolesContainer = block.createDiv({ cls: "chart-role-fields" });

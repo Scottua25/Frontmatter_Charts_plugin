@@ -22,7 +22,7 @@ This plugin visualizes your YAML frontmatter data as dynamic charts — perfect 
     <your-vault>/.obsidian/plugins/frontmatter-charts/
     ````
 
-3. Enable the plugin in Obsidian's settings under **Community Plugins**.
+3. Enable the plugin in Obsidian's settings under **Community Plugins**. (Comming Soon!)
 
 ## ⚙️ How to Use
 
