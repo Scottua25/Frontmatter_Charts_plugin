@@ -21,6 +21,9 @@ export interface ChartTypeConfig {
 	reverseScale?: boolean;
 	fontSize?: number;
 	marginTop?: number;
+	marginBottom?: number;
+	marginLeft?: number;
+	marginRight?: number;
 	fontColor?: string;
 	backgroundColor?: string;
 	chartColor?: string;

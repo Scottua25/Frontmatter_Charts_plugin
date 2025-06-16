@@ -8,7 +8,7 @@ import { renderFolderSetting } from "../src/settings-sections/folderSetting";
 import { renderChartTypeSetting } from "../src/settings-sections/chartTypeSetting";
 import { renderChartStyleSetting } from "../src/settings-sections/chartStyleSetting";
 import { renderHeatmapSettings } from "../src/settings-sections/heatmapSettings";
-import { renderTopMarginSetting } from "../src/settings-sections/topMarginSetting";
+import { renderMarginSetting } from "../src/settings-sections/marginSetting";
 import { renderFontSettings } from "../src/settings-sections/fontSettings";
 import { renderColorSettings } from "../src/settings-sections/colorSettings";
 import { renderChartRoleFields } from "../renderers/renderChartRoleFields";
@@ -79,7 +79,7 @@ if (!Array.isArray(updatedFields)) {
     roleFieldsContainer = rolesContainer.createDiv({ cls: "role-fields-container" });
     updateRoleFields();
 
-	renderTopMarginSetting(block, config, plugin);
+	renderMarginSetting(block, config, plugin);
 	renderFontSettings(block, config, plugin);
 	renderColorSettings(block, config, plugin);
 	renderDeleteChartSetting(block, key, plugin, refresh);

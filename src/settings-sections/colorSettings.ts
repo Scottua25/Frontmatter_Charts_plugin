@@ -67,7 +67,7 @@ export function renderColorSettings(
 			});
 	}
 
-	if (isBarOrLine || isHeatmap) {
+	if (isBarOrLine) {
 		const chartColorSetting = new Setting(block)
 			.setName("Chart Color")
 			.setDesc("Primary color for bar or line charts")

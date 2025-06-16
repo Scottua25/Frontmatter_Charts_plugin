@@ -82,7 +82,12 @@ fields.forEach((field, rowIdx) => {
 
 	const layout = {
 		title: `Heatmap: ${type}`,
-		margin: { t: config.marginTop ?? 30, l: 120 },
+		margin: {
+			t: config.marginTop ?? 30,
+			b: config.marginBottom ?? 30,
+			l: config.marginLeft ?? 30,
+			r: config.marginRight ?? 30,
+		},
 		xaxis: {
 			type: 'category',
 			tickangle: -45,

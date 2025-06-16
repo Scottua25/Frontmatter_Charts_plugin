@@ -9,7 +9,6 @@ export default function renderLineChart(app: App, el: HTMLElement, type: string,
         el.createEl("div", { text: "Missing bar chart configuration." });
         return;
     }
-    
 
 	const dataMap = getDataMap(app, config);
 	const dates = Object.keys(dataMap).sort().slice(-config.limitDays || undefined);
@@ -58,6 +57,12 @@ export default function renderLineChart(app: App, el: HTMLElement, type: string,
 
 	const layout = {
 		title: `Line Chart: ${type}`,
+		margin: {
+			t: config.marginTop ?? 30,
+			b: config.marginBottom ?? 30,
+			l: config.marginLeft ?? 30,
+			r: config.marginRight ?? 30,
+		},
 		plot_bgcolor: config.backgroundChartColor || "rgba(0,0,0,0)",
 		paper_bgcolor: config.backgroundPageColor || "rgba(0,0,0,0)",
 		font: {

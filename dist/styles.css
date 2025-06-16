@@ -90,3 +90,20 @@ If your plugin does not need CSS, delete this file.
 	margin-left: 8px;
 	vertical-align: middle;
 }
+
+.chart-margin-row {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin-top: 6px;
+}
+
+.chart-margin-label {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+}
+
+.chart-margin-input {
+	width: 60px;
+}
