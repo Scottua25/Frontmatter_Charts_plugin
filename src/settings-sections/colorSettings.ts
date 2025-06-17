@@ -40,8 +40,26 @@ export function renderColorSettings(
 
 	if (isHeatmap) {
 		const colorOptions = [
-			"YlGnBu", "Viridis", "Hot", "Blues", "Greens", "Reds",
-			"Jet", "Picnic", "Portland", "Electric", "Cividis"
+			"Aggrnyl",
+			"Agsunset",
+			"Blackbody",
+			"Bluered",
+			"Blues",
+			"Cividis",
+			"Earth",
+			"Electric",
+			"Greens",
+			"Greys",
+			"Hot",
+			"Jet",
+			"Picnic",
+			"Portland",
+			"Rainbow",
+			"RdBu",
+			"Reds",
+			"Viridis",
+			"YlGnBu",
+			"YlOrRd"
 		];
 	
 		// Create a setting block
