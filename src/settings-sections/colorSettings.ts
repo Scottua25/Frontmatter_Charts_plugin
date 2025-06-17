@@ -1,6 +1,8 @@
 import type ChartDashboardPlugin from "../../main";
-import { addColorWithAlphaSetting, addInlineColorPicker } from "../colorUtils";
-import { Setting } from "obsidian";
+import { addColorWithAlphaSetting, addInlineColorPicker, getColorscaleGradient } from "../colorUtils";
+import { Setting, ToggleComponent } from "obsidian";
+import Plotly from "plotly.js-dist-min";
+import { customColorscales } from "../helpers/customColorScales";
 
 export function renderColorSettings(
 	block: HTMLElement,
@@ -41,31 +43,75 @@ export function renderColorSettings(
 			"YlGnBu", "Viridis", "Hot", "Blues", "Greens", "Reds",
 			"Jet", "Picnic", "Portland", "Electric", "Cividis"
 		];
+	
+		// Create a setting block
+		const colorScaleSetting = new Setting(block)
+		.setName("Colorscale")
+		.setDesc("Plotly color scheme");
 
-		new Setting(block)
-			.setName("Colorscale")
-			.setDesc("Plotly color scheme")
-			.addDropdown(drop => {
-				colorOptions.forEach(c => drop.addOption(c, c));
-				drop.setValue(config.colorscale || "YlGnBu")
-					.onChange(async val => {
-						config.colorscale = val;
-						await plugin.saveSettings();
-					});
-			});
+		// Create shared container for dropdown + toggle + preview
+		const controlGroup = document.createElement("div");
+		controlGroup.classList.add("colorscale-control-group");
 
-		new Setting(block)
-			.setName("Reverse Colorscale")
-			.setDesc("Invert the heatmap color direction")
-			.addToggle(toggle => {
-				toggle
-					.setValue(config.reverseScale ?? false)
-					.onChange(async (val) => {
-						config.reverseScale = val;
-						await plugin.saveSettings();
-					});
-			});
+		// Dropdown
+		const dropdown = document.createElement("select");
+		dropdown.classList.add("colorscale-dropdown");
+		colorOptions.forEach(c => {
+		const opt = document.createElement("option");
+		opt.value = opt.text = c;
+		dropdown.appendChild(opt);
+		});
+		dropdown.value = config.colorscale || "YlGnBu";
+		controlGroup.appendChild(dropdown);
+
+		// Toggle container
+		const toggleContainer = document.createElement("div");
+		toggleContainer.classList.add("colorscale-toggle-container");
+
+		const toggleLabel = document.createElement("label");
+		toggleLabel.textContent = "Reverse";
+		toggleLabel.classList.add("colorscale-toggle-label");
+
+		const reverseToggle = new ToggleComponent(toggleContainer);
+		reverseToggle
+		.setValue(config.reverseScale ?? false)
+		.onChange(async val => {
+			config.reverseScale = val;
+			updatePreview(dropdown.value, val);
+			await plugin.saveSettings();
+		});
+
+		toggleContainer.prepend(toggleLabel);
+		controlGroup.appendChild(toggleContainer);
+
+		// Gradient preview
+		const previewEl = document.createElement("div");
+		previewEl.classList.add("colorscale-preview-bar");
+		controlGroup.appendChild(previewEl);
+
+		// Append entire custom group into setting control
+		colorScaleSetting.settingEl.querySelector(".setting-item-control")?.appendChild(controlGroup);
+
+		// Initial update + dropdown handler
+		const updatePreview = (val: string, reverse: boolean = false) => {
+		const scale = customColorscales[val];
+		if (Array.isArray(scale)) {
+			const finalScale = reverse ? [...scale].reverse() : scale;
+			previewEl.style.backgroundImage = getColorscaleGradient(finalScale);
+		} else {
+			previewEl.style.backgroundImage = "none";
+		}
+		};
+
+		updatePreview(dropdown.value, config.reverseScale ?? false);
+
+		dropdown.addEventListener("change", async () => {
+		config.colorscale = dropdown.value;
+		updatePreview(dropdown.value, config.reverseScale ?? false);
+		await plugin.saveSettings();
+		});
 	}
+	
 
 	if (isBarOrLine) {
 		const chartColorSetting = new Setting(block)

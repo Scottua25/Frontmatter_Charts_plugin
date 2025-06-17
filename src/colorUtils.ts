@@ -103,3 +103,13 @@ export function addInlineColorPicker(
 	colorInput.addEventListener("input", () => onChange(colorInput.value));
 	settingEl.appendChild(colorInput);
 }
+// === Colorscale preview in settings UI ==
+export function getColorscaleGradient(scale: [number, string][]): string {
+	const n = scale.length;
+	const stops = scale.map(([_, color], i) => {
+		const percent = (i / (n - 1)) * 100;
+		return `${color} ${percent}%`;
+	});
+	return `linear-gradient(to right, ${stops.join(", ")})`;
+}
+
