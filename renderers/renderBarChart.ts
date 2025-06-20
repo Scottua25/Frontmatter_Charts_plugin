@@ -20,7 +20,7 @@ export default function renderBarChart(
 		.sort()
 		.slice(-config.limitDays || undefined);
 
-	const x = dates.map((date) => dataMap[date]?.[config.x] ?? date);
+	// const x = dates.map((date) => dataMap[date]?.[config.x] ?? date);
 	const yFields = Array.isArray(config.y) ? config.y : [config.y];
 
 	const style = config.chartStyle || "vertical";

@@ -55,14 +55,14 @@ if (prod) {
 	// Optional: copy styles.css if it exists
 	try {
 		copyFileSync("styles.css", resolve("dist", "styles.css"));
-	} catch (err) {
+	} catch {
 		// It's fine if styles.css doesn't exist
 	}
 
 	// Optional: copy README.md if it exists
 	try {
 		copyFileSync("README.md", resolve("dist", "README.md"));
-	} catch (err) {
+	} catch {
 		// It's fine if README.md doesn't exist
 	}
 

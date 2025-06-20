@@ -4,10 +4,18 @@ import eslintPlugin from "@eslint/js";
 
 export default [
 	{
-		ignores: ["node_modules/", "main.js"]
+		ignores: ["node_modules/", "main.js", "dist/"]
 	},
 	eslintPlugin.configs.recommended,
 	...tseslint.configs.recommended,
+	{
+		files: ["**/*.js", "**/*.mjs"],
+		languageOptions: {
+			globals: {
+				process: "readonly",
+			},
+		},
+	},
 	{
 		files: ["**/*.ts", "**/*.tsx"],
 		languageOptions: {

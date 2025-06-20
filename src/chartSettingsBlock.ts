@@ -5,13 +5,45 @@ import { renderChartRoleFields } from "../renderers/renderChartRoleFields";
 import { chartRendererMap } from "../src/chartRendererMap";
 import { CHART_STYLES } from "../src/settings";
 
+type ChartType =
+	| "heatmap"
+	| "bar"
+	| "line"
+	| "pie"
+	| "scatter"
+	| "scatter3d"
+	| "bubble"
+	| "candlestick"
+	| "histogram"
+	| "box"
+	| "violin";
+
+interface ChartConfig {
+	chartType: ChartType;
+	chartStyle?: string;
+	cellHeight?: number;
+	marginTop?: number;
+	fontColor?: string;
+	fontSize?: number;
+	backgroundPageColor?: string;
+	colorscale?: string;
+	reverseScale?: boolean;
+	chartColor?: string;
+	folder?: string;
+	fields?: Record<string, unknown>;
+}
+
+type DropdownWithCustomUpdate = DropdownComponent & {
+	_updateStyleOptions?: () => void;
+};
+
 // Must be async because we use await inside
 export async function renderChartSettingsBlock(
 	app: App,
 	plugin: ChartDashboardPlugin,
 	container: HTMLElement,
 	key: string,
-	config: any,
+	config: ChartConfig,
 	refresh: () => void,
 	updateFieldsFromFolder: (key: string, folder: string) => Promise<void>
 ): Promise<void> {
@@ -35,7 +67,7 @@ export async function renderChartSettingsBlock(
 	block.classList.add("heatmap-config-block");
 	detailsEl.appendChild(block);
 
-	const rolesContainer = block.createDiv({ cls: "chart-role-fields" });
+	// const rolesContainer = block.createDiv({ cls: "chart-role-fields" });
 
 	let roleFieldsContainer: HTMLElement;
 
@@ -59,9 +91,7 @@ export async function renderChartSettingsBlock(
 
 	roleFieldsContainer = block.createDiv({ cls: "role-fields-container" });
 
-	let colorscaleSetting: Setting;
-	let reverseScaleSetting: Setting;
-	let chartColorSetting: Setting;
+
 	let heatmapCellHeightSetting: Setting;
 
 	const folderSetting = new Setting(block)
@@ -99,20 +129,20 @@ export async function renderChartSettingsBlock(
 			chartTypes.forEach((type) =>
 				drop.addOption(type, type.charAt(0).toUpperCase() + type.slice(1))
 			);
-			drop.setValue(config.chartType || "heatmap").onChange(async (val) => {
-				config.chartType = val;
-				await plugin.saveSettings();
-				updateAxisVisibility();
-				updateRoleFields();
-				(chartStyleDropdown as any)?._updateStyleOptions?.();
-				//refresh();
+			drop.setValue(config.chartType || "heatmap").onChange(async (val: string) => {
+				if ((Object.keys(chartRendererMap) as ChartType[]).includes(val as ChartType)) {
+					config.chartType = val as ChartType;
+					await plugin.saveSettings();
+					updateAxisVisibility();
+					updateRoleFields();
+					(chartStyleDropdown as DropdownWithCustomUpdate)?._updateStyleOptions?.();
+				}
 			});
 		});
 
 	// === Chart Style Dropdown ===
-	let chartStyleDropdown: DropdownComponent;
-
-	const styleSetting = new Setting(block)
+	let chartStyleDropdown: DropdownWithCustomUpdate;
+	new Setting(block)
 		.setName("Chart Style")
 		.setDesc("Substyle of the selected chart type")
 		.addDropdown((drop) => {
@@ -141,8 +171,7 @@ export async function renderChartSettingsBlock(
 			});
 
 			// Save update function so we can call it later
-			(drop as any)._updateStyleOptions = updateStyleOptions;
-		});
+			(chartStyleDropdown as DropdownWithCustomUpdate)._updateStyleOptions = updateStyleOptions;		});
 
 	// === Heatmap Cell Height ===
 	if (config.chartType === "heatmap") {
@@ -261,7 +290,7 @@ export async function renderChartSettingsBlock(
 	];
 
 	// === Colorscale (Heatmap only)
-	colorscaleSetting = new Setting(block)
+	const colorscaleSetting = new Setting(block)
 		.setName("Colorscale")
 		.setDesc("Plotly color scheme")
 		.addDropdown((drop) => {
@@ -274,7 +303,7 @@ export async function renderChartSettingsBlock(
 		});
 
 	// === Reverse Scale (Heatmap only)
-	reverseScaleSetting = new Setting(block)
+	const reverseScaleSetting = new Setting(block)
 		.setName("Reverse Colorscale")
 		.setDesc("Invert the heatmap color direction")
 		.addToggle((toggle) => {
@@ -286,7 +315,7 @@ export async function renderChartSettingsBlock(
 		});
 
 	// === Chart Color (Bar/Line only)
-	chartColorSetting = new Setting(block)
+	const chartColorSetting = new Setting(block)
 		.setName("Chart Color")
 		.setDesc("Primary color for bar or line charts")
 		.addText((text) => {
@@ -332,7 +361,7 @@ export async function renderChartSettingsBlock(
 	function updateAxisVisibility() {
 		const isHeatmap = config.chartType === "heatmap";
 		const isBarOrLine = config.chartType === "bar" || config.chartType === "line";
-		const hasFields = Object.keys(config.fields).length > 0;
+		// const hasFields = Object.keys(config.fields).length > 0;
 
 		chartColorSetting.settingEl.style.display = isBarOrLine ? "" : "none";
 		colorscaleSetting.settingEl.style.display = isHeatmap ? "" : "none";
