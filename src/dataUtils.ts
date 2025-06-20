@@ -1,8 +1,4 @@
-import { 
-    App,
-    TFolder,
-    TFile
-        } from "obsidian";
+import { App, TFolder, TFile } from "obsidian";
 
 export function getDataMap(app: App, config: any): Record<string, any> {
 	const dataMap: Record<string, any> = {};

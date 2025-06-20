@@ -8,12 +8,12 @@ import renderLineChart from "../renderers/renderLineChart";
 import renderPieChart from "../renderers/renderPieChart";
 
 export const chartRendererMap: Record<
-  string,
-  (app: App, el: HTMLElement, type: string, settings: ChartSettings) => void
+	string,
+	(app: App, el: HTMLElement, type: string, settings: ChartSettings) => void
 > = {
-  heatmap: renderHeatmapChart,
-  bar: renderBarChart,
-  line: renderLineChart,
-  pie: renderPieChart,
-  // Add more as you implement them
+	heatmap: renderHeatmapChart,
+	bar: renderBarChart,
+	line: renderLineChart,
+	pie: renderPieChart,
+	// Add more as you implement them
 };

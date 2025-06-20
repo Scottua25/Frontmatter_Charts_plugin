@@ -5,7 +5,7 @@ export const customColorscales: Record<string, [number, string][]> = {
 		[0.4, "#665191"],
 		[0.6, "#a05195"],
 		[0.8, "#d45087"],
-		[1.0, "#f95d6a"]
+		[1.0, "#f95d6a"],
 	],
 	Agsunset: [
 		[0.0, "#335c67"],
@@ -13,7 +13,7 @@ export const customColorscales: Record<string, [number, string][]> = {
 		[0.4, "#e09f3e"],
 		[0.6, "#9e2a2b"],
 		[0.8, "#540b0e"],
-		[1.0, "#000000"]
+		[1.0, "#000000"],
 	],
 	Blackbody: [
 		[0.0, "#000000"],
@@ -21,12 +21,12 @@ export const customColorscales: Record<string, [number, string][]> = {
 		[0.4, "#ff4c00"],
 		[0.6, "#ffff00"],
 		[0.8, "#ffffff"],
-		[1.0, "#ffffff"]
+		[1.0, "#ffffff"],
 	],
 	Bluered: [
 		[0.0, "#3a4cc0"],
 		[0.5, "#ffffff"],
-		[1.0, "#b40426"]
+		[1.0, "#b40426"],
 	],
 	Blues: [
 		[0.0, "#f7fbff"],
@@ -37,7 +37,7 @@ export const customColorscales: Record<string, [number, string][]> = {
 		[0.625, "#4292c6"],
 		[0.75, "#2171b5"],
 		[0.875, "#08519c"],
-		[1.0, "#08306b"]
+		[1.0, "#08306b"],
 	],
 	Cividis: [
 		[0.0, "#00204c"],
@@ -45,7 +45,7 @@ export const customColorscales: Record<string, [number, string][]> = {
 		[0.4, "#6a7b8f"],
 		[0.6, "#a5aa91"],
 		[0.8, "#dedb91"],
-		[1.0, "#ffffe0"]
+		[1.0, "#ffffe0"],
 	],
 	Earth: [
 		[0.0, "#000000"],
@@ -53,7 +53,7 @@ export const customColorscales: Record<string, [number, string][]> = {
 		[0.3, "#755f4e"],
 		[0.5, "#d1b280"],
 		[0.7, "#a9b991"],
-		[1.0, "#d5e6e0"]
+		[1.0, "#d5e6e0"],
 	],
 	Electric: [
 		[0.0, "#000000"],
@@ -63,7 +63,7 @@ export const customColorscales: Record<string, [number, string][]> = {
 		[0.6, "#2d00ff"],
 		[0.75, "#6a5fff"],
 		[0.9, "#b4b4ff"],
-		[1.0, "#ffffff"]
+		[1.0, "#ffffff"],
 	],
 	Greens: [
 		[0.0, "#f7fcf5"],
@@ -74,20 +74,20 @@ export const customColorscales: Record<string, [number, string][]> = {
 		[0.625, "#41ab5d"],
 		[0.75, "#238b45"],
 		[0.875, "#006d2c"],
-		[1.0, "#00441b"]
+		[1.0, "#00441b"],
 	],
 	Greys: [
 		[0.0, "#ffffff"],
 		[0.25, "#cccccc"],
 		[0.5, "#888888"],
 		[0.75, "#444444"],
-		[1.0, "#000000"]
+		[1.0, "#000000"],
 	],
 	Hot: [
 		[0.0, "#0b0000"],
 		[0.3, "#ff0000"],
 		[0.6, "#ffff00"],
-		[1.0, "#ffffff"]
+		[1.0, "#ffffff"],
 	],
 	Jet: [
 		[0.0, "#00007F"],
@@ -95,7 +95,7 @@ export const customColorscales: Record<string, [number, string][]> = {
 		[0.5, "#00FFFF"],
 		[0.65, "#FFFF00"],
 		[0.8, "#FF0000"],
-		[1.0, "#7F0000"]
+		[1.0, "#7F0000"],
 	],
 	Picnic: [
 		[0.0, "#0000ff"],
@@ -107,14 +107,14 @@ export const customColorscales: Record<string, [number, string][]> = {
 		[0.6, "#ff66ff"],
 		[0.7, "#cc66ff"],
 		[0.8, "#9966ff"],
-		[1.0, "#6666ff"]
+		[1.0, "#6666ff"],
 	],
 	Portland: [
 		[0.0, "#0c3383"],
 		[0.25, "#ffffff"],
 		[0.5, "#ec7063"],
 		[0.75, "#f39c12"],
-		[1.0, "#58d68d"]
+		[1.0, "#58d68d"],
 	],
 	Rainbow: [
 		[0.0, "#6e40aa"],
@@ -127,14 +127,14 @@ export const customColorscales: Record<string, [number, string][]> = {
 		[0.7, "#d5ffd2"],
 		[0.8, "#edffb3"],
 		[0.9, "#ffe27a"],
-		[1.0, "#ffc04c"]
+		[1.0, "#ffc04c"],
 	],
 	RdBu: [
 		[0.0, "#67001f"],
 		[0.25, "#b2182b"],
 		[0.5, "#f7f7f7"],
 		[0.75, "#2166ac"],
-		[1.0, "#053061"]
+		[1.0, "#053061"],
 	],
 	Reds: [
 		[0.0, "#fff5f0"],
@@ -145,7 +145,7 @@ export const customColorscales: Record<string, [number, string][]> = {
 		[0.625, "#ef3b2c"],
 		[0.75, "#cb181d"],
 		[0.875, "#a50f15"],
-		[1.0, "#67000d"]
+		[1.0, "#67000d"],
 	],
 	Viridis: [
 		[0.0, "#440154"],
@@ -156,7 +156,7 @@ export const customColorscales: Record<string, [number, string][]> = {
 		[0.625, "#1f9d8a"],
 		[0.75, "#6cce5a"],
 		[0.875, "#b6de2b"],
-		[1.0, "#fde725"]
+		[1.0, "#fde725"],
 	],
 	YlGnBu: [
 		[0.0, "#ffffd9"],
@@ -167,7 +167,7 @@ export const customColorscales: Record<string, [number, string][]> = {
 		[0.625, "#1d91c0"],
 		[0.75, "#225ea8"],
 		[0.875, "#253494"],
-		[1.0, "#081d58"]
+		[1.0, "#081d58"],
 	],
 	YlOrRd: [
 		[0.0, "#ffffcc"],
@@ -178,6 +178,6 @@ export const customColorscales: Record<string, [number, string][]> = {
 		[0.625, "#fc4e2a"],
 		[0.75, "#e31a1c"],
 		[0.875, "#bd0026"],
-		[1.0, "#800026"]
-	]
+		[1.0, "#800026"],
+	],
 };

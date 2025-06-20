@@ -21,17 +21,19 @@ declare global {
 function renderChart(app: App, el: HTMLElement, type: string, settings: ChartSettings) {
 	const config = settings.chartTypes[type];
 	if (!config) {
-	  el.createEl("div", { text: "No config found for chart type: " + type });
-	  return;
+		el.createEl("div", { text: "No config found for chart type: " + type });
+		return;
 	}
-  
+
 	const chartType = config.chartType as keyof typeof chartRendererMap;
 	const renderer = chartRendererMap[chartType];
 	if (!renderer) {
-	  el.createEl("div", { text: `Unsupported chart type: ${config.chartType}` });
-	  return;
+		el.createEl("div", {
+			text: `Unsupported chart type: ${config.chartType}`,
+		});
+		return;
 	}
-	
+
 	const { valid, missing } = validateChartRoles(chartType, config);
 	if (!valid) {
 		el.createEl("div", {
@@ -41,9 +43,9 @@ function renderChart(app: App, el: HTMLElement, type: string, settings: ChartSet
 	}
 
 	renderer(app, el, type, settings);
-  }
-  
-  export default class ChartDashboardPlugin extends Plugin {
+}
+
+export default class ChartDashboardPlugin extends Plugin {
 	settings!: ChartSettings;
 
 	async onload() {
@@ -58,7 +60,9 @@ function renderChart(app: App, el: HTMLElement, type: string, settings: ChartSet
 			const config = this.settings.chartTypes[chartKey];
 
 			if (!config || !config.chartType || !(config.chartType in chartRendererMap)) {
-				el.createEl("div", { text: `Missing or invalid chart config for '${chartKey}'` });
+				el.createEl("div", {
+					text: `Missing or invalid chart config for '${chartKey}'`,
+				});
 				return;
 			}
 
@@ -66,7 +70,9 @@ function renderChart(app: App, el: HTMLElement, type: string, settings: ChartSet
 				renderChart(this.app, el, chartKey, this.settings);
 			} catch (err) {
 				console.error(`Chart rendering failed for '${chartKey}':`, err);
-				el.createEl("div", { text: `Chart rendering failed for '${chartKey}'. See console.` });
+				el.createEl("div", {
+					text: `Chart rendering failed for '${chartKey}'. See console.`,
+				});
 			}
 		});
 
@@ -78,4 +84,3 @@ function renderChart(app: App, el: HTMLElement, type: string, settings: ChartSet
 		await this.saveData(this.settings);
 	}
 }
-

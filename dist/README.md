@@ -35,21 +35,19 @@ Each chart allows you to customize:
 - Font size and color
 - Margins (top, bottom, left, right)
 
-
 ## 📦 Installation
 
 1. Clone this repo or download the latest release.
 2. Copy `main.js`, `manifest.json`, and `styles.css` into:
 
-    ````markdown
+    ```markdown
     <your-vault>/.obsidian/plugins/frontmatter-charts/
-    ````
+    ```
 
 3. Enable the plugin in Obsidian's settings under **Community Plugins**. (Coming Soon!)
 
 ## ⚙️ How to Use
 
-  
 1. Open the plugin settings.
 2. Enter a name for your chart (e.g., `micros`, `workouts`, etc.) and click the "Add" button.
 3. Set the folder to scan.
@@ -62,14 +60,13 @@ Each chart allows you to customize:
     ```
     ````
 7. Voilà — a live chart rendered using Plotly!
+
 ## 🧪 Examples
 
 ### Example frontmatter
 
 ```yaml
-
 ---
-
 date: 2025-06-01
 
 iron_mg: 6
@@ -79,18 +76,16 @@ magnesium_mg: 300
 zinc_mg: 10
 
 ---
-
 ```
 
 ### Example chart embed
 
 ````markdown
-
 ```insert-chart
    macros
 ```
-
 ````
+
 ## 🛠️ Developer Notes
 
 Built with:
@@ -100,6 +95,7 @@ Built with:
 - Plotly.js for rendering
 
 This project originated from the [Obsidian Sample Plugin](https://github.com/obsidianmd/obsidian-sample-plugin) and was extensively expanded to support advanced data visualization use cases inside Obsidian.
+
 ## ❤️ Support
 
 ![License: GPLv3](https://img.shields.io/badge/License-GPLv3-blue.svg)

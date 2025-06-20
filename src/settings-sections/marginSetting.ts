@@ -1,12 +1,7 @@
 import { Setting } from "obsidian";
 import type ChartDashboardPlugin from "../../main";
 
-export function renderMarginSetting(
-	container: HTMLElement,
-	config: any,
-	plugin: any
-): void {
-
+export function renderMarginSetting(container: HTMLElement, config: any, plugin: any): void {
 	const marginDefaults = {
 		marginTop: 30,
 		marginBottom: 40,
@@ -17,7 +12,6 @@ export function renderMarginSetting(
 	const setting = new Setting(container)
 		.setName("Margins")
 		.setDesc("Set the chart margins in pixels");
-
 
 	const row = document.createElement("div");
 	row.classList.add("chart-margin-row");

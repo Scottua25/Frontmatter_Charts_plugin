@@ -5,25 +5,23 @@ export function parseRGBA(str: string): [number, number, number, number] {
 	if (match) {
 		const [, r, g, b, a] = match;
 		return [
-			parseInt(r), parseInt(g), parseInt(b),
-			a !== undefined && a !== "" ? parseFloat(a) : 1
+			parseInt(r),
+			parseInt(g),
+			parseInt(b),
+			a !== undefined && a !== "" ? parseFloat(a) : 1,
 		];
 	}
 	return [0, 0, 0, 1];
 }
 
 export function rgbToHex(r: number, g: number, b: number): string {
-	return "#" + [r, g, b].map(x => x.toString(16).padStart(2, "0")).join("");
+	return "#" + [r, g, b].map((x) => x.toString(16).padStart(2, "0")).join("");
 }
 
 export function hexToRgb(hex: string): [number, number, number] {
 	const h = hex.replace("#", "");
 	const bigint = parseInt(h, 16);
-	return [
-		(bigint >> 16) & 255,
-		(bigint >> 8) & 255,
-		bigint & 255,
-	];
+	return [(bigint >> 16) & 255, (bigint >> 8) & 255, bigint & 255];
 }
 
 export function addColorWithAlphaSetting(
@@ -33,9 +31,7 @@ export function addColorWithAlphaSetting(
 	initial: string,
 	onChange: (rgba: string) => Promise<void>
 ) {
-	const setting = new Setting(block)
-		.setName(label)
-		.setDesc(description);
+	const setting = new Setting(block).setName(label).setDesc(description);
 
 	const wrapper = setting.controlEl.createDiv({ cls: "rgba-input-wrapper" });
 
@@ -91,7 +87,7 @@ export function addInlineColorPicker(
 		try {
 			if (initialColor.startsWith("rgba")) {
 				const [r, g, b] = initialColor.match(/\d+/g)!.map(Number);
-				return "#" + [r, g, b].map(x => x.toString(16).padStart(2, "0")).join("");
+				return "#" + [r, g, b].map((x) => x.toString(16).padStart(2, "0")).join("");
 			}
 			if (initialColor.startsWith("#")) return initialColor;
 		} catch (_) {}
@@ -112,4 +108,3 @@ export function getColorscaleGradient(scale: [number, string][]): string {
 	});
 	return `linear-gradient(to right, ${stops.join(", ")})`;
 }
-

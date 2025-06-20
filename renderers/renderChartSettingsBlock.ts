@@ -1,8 +1,4 @@
-import {
-	App,
-	Setting,
-	DropdownComponent
-} from "obsidian";
+import { App, Setting, DropdownComponent } from "obsidian";
 import type ChartDashboardPlugin from "../main";
 import { renderFolderSetting } from "../src/settings-sections/folderSetting";
 import { renderChartTypeSetting } from "../src/settings-sections/chartTypeSetting";
@@ -44,14 +40,14 @@ export async function renderChartSettingsBlock(
 	block.classList.add("heatmap-config-block");
 	detailsEl.appendChild(block);
 
-    let roleFieldsContainer: HTMLElement;
+	let roleFieldsContainer: HTMLElement;
 
 	function updateRoleFields() {
 		const updatedFields = Object.keys(config.fields || {});
-if (!Array.isArray(updatedFields)) {
-	console.error("Invalid updatedFields:", updatedFields);
-	return;
-}
+		if (!Array.isArray(updatedFields)) {
+			console.error("Invalid updatedFields:", updatedFields);
+			return;
+		}
 		const scrollTop = roleFieldsContainer.scrollTop;
 
 		renderChartRoleFields(
@@ -75,9 +71,11 @@ if (!Array.isArray(updatedFields)) {
 	renderSortOrderSetting(block, config, plugin.saveSettings.bind(plugin), updateRoleFields);
 	renderHeatmapSettings(block, config, plugin);
 
-    const rolesContainer = block.createDiv({ cls: "chart-role-fields" });
-    roleFieldsContainer = rolesContainer.createDiv({ cls: "role-fields-container" });
-    updateRoleFields();
+	const rolesContainer = block.createDiv({ cls: "chart-role-fields" });
+	roleFieldsContainer = rolesContainer.createDiv({
+		cls: "role-fields-container",
+	});
+	updateRoleFields();
 
 	renderMarginSetting(block, config, plugin);
 	renderFontSettings(block, config, plugin);

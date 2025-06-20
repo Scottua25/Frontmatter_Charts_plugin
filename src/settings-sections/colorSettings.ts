@@ -1,5 +1,9 @@
 import type ChartDashboardPlugin from "../../main";
-import { addColorWithAlphaSetting, addInlineColorPicker, getColorscaleGradient } from "../colorUtils";
+import {
+	addColorWithAlphaSetting,
+	addInlineColorPicker,
+	getColorscaleGradient,
+} from "../colorUtils";
 import { Setting, ToggleComponent } from "obsidian";
 import Plotly from "plotly.js-dist-min";
 import { customColorscales } from "../helpers/customColorScales";
@@ -59,13 +63,13 @@ export function renderColorSettings(
 			"Reds",
 			"Viridis",
 			"YlGnBu",
-			"YlOrRd"
+			"YlOrRd",
 		];
-	
+
 		// Create a setting block
 		const colorScaleSetting = new Setting(block)
-		.setName("Colorscale")
-		.setDesc("Plotly color scheme");
+			.setName("Colorscale")
+			.setDesc("Plotly color scheme");
 
 		// Create shared container for dropdown + toggle + preview
 		const controlGroup = document.createElement("div");
@@ -74,10 +78,10 @@ export function renderColorSettings(
 		// Dropdown
 		const dropdown = document.createElement("select");
 		dropdown.classList.add("colorscale-dropdown");
-		colorOptions.forEach(c => {
-		const opt = document.createElement("option");
-		opt.value = opt.text = c;
-		dropdown.appendChild(opt);
+		colorOptions.forEach((c) => {
+			const opt = document.createElement("option");
+			opt.value = opt.text = c;
+			dropdown.appendChild(opt);
 		});
 		dropdown.value = config.colorscale || "YlGnBu";
 		controlGroup.appendChild(dropdown);
@@ -91,9 +95,7 @@ export function renderColorSettings(
 		toggleLabel.classList.add("colorscale-toggle-label");
 
 		const reverseToggle = new ToggleComponent(toggleContainer);
-		reverseToggle
-		.setValue(config.reverseScale ?? false)
-		.onChange(async val => {
+		reverseToggle.setValue(config.reverseScale ?? false).onChange(async (val) => {
 			config.reverseScale = val;
 			updatePreview(dropdown.value, val);
 			await plugin.saveSettings();
@@ -108,36 +110,36 @@ export function renderColorSettings(
 		controlGroup.appendChild(previewEl);
 
 		// Append entire custom group into setting control
-		colorScaleSetting.settingEl.querySelector(".setting-item-control")?.appendChild(controlGroup);
+		colorScaleSetting.settingEl
+			.querySelector(".setting-item-control")
+			?.appendChild(controlGroup);
 
 		// Initial update + dropdown handler
 		const updatePreview = (val: string, reverse: boolean = false) => {
-		const scale = customColorscales[val];
-		if (Array.isArray(scale)) {
-			const finalScale = reverse ? [...scale].reverse() : scale;
-			previewEl.style.backgroundImage = getColorscaleGradient(finalScale);
-		} else {
-			previewEl.style.backgroundImage = "none";
-		}
+			const scale = customColorscales[val];
+			if (Array.isArray(scale)) {
+				const finalScale = reverse ? [...scale].reverse() : scale;
+				previewEl.style.backgroundImage = getColorscaleGradient(finalScale);
+			} else {
+				previewEl.style.backgroundImage = "none";
+			}
 		};
 
 		updatePreview(dropdown.value, config.reverseScale ?? false);
 
 		dropdown.addEventListener("change", async () => {
-		config.colorscale = dropdown.value;
-		updatePreview(dropdown.value, config.reverseScale ?? false);
-		await plugin.saveSettings();
+			config.colorscale = dropdown.value;
+			updatePreview(dropdown.value, config.reverseScale ?? false);
+			await plugin.saveSettings();
 		});
 	}
-	
 
 	if (isBarOrLine) {
 		const chartColorSetting = new Setting(block)
 			.setName("Chart Color")
 			.setDesc("Primary color for bar or line charts")
-			.addText(text => {
-				text
-					.setPlaceholder("#ff9900")
+			.addText((text) => {
+				text.setPlaceholder("#ff9900")
 					.setValue(config.chartColor || "#ff9900")
 					.onChange(async (val) => {
 						config.chartColor = val;
@@ -150,7 +152,9 @@ export function renderColorSettings(
 			config.chartColor || "#ff9900",
 			async (val) => {
 				config.chartColor = val;
-				const input = chartColorSetting.controlEl.querySelector("input[type='text']") as HTMLInputElement;
+				const input = chartColorSetting.controlEl.querySelector(
+					"input[type='text']"
+				) as HTMLInputElement;
 				if (input) input.value = val;
 				await plugin.saveSettings();
 			}

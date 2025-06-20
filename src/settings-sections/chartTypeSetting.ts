@@ -11,17 +11,16 @@ export function renderChartTypeSetting(
 	new Setting(block)
 		.setName("Chart Type")
 		.setDesc("Select chart visualization")
-		.addDropdown(drop => {
+		.addDropdown((drop) => {
 			const chartTypes = Object.keys(chartRendererMap);
-			chartTypes.forEach(type =>
+			chartTypes.forEach((type) =>
 				drop.addOption(type, type.charAt(0).toUpperCase() + type.slice(1))
 			);
-			drop.setValue(config.chartType || "heatmap")
-				.onChange(async (val) => {
-					config.chartType = val;
-					await plugin.saveSettings();
-					(updateRoleFields as any)?.(); // Optional chaining
-					(config._chartStyleDropdown as any)?._updateStyleOptions?.();
-				});
+			drop.setValue(config.chartType || "heatmap").onChange(async (val) => {
+				config.chartType = val;
+				await plugin.saveSettings();
+				(updateRoleFields as any)?.(); // Optional chaining
+				(config._chartStyleDropdown as any)?._updateStyleOptions?.();
+			});
 		});
 }

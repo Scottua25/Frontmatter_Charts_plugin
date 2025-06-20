@@ -1,15 +1,7 @@
-import {
-	App,
-	PluginSettingTab,
-	Setting,
-	TFolder,
-	TFile,
-	MarkdownView
-} from "obsidian";
+import { App, PluginSettingTab, Setting, TFolder, TFile, MarkdownView } from "obsidian";
 import type ChartDashboardPlugin from "../main";
 //import { renderChartSettingsBlock } from "./chartSettingsBlock"; // monolithic ui configuration file
 import { renderChartSettingsBlock } from "../renderers/renderChartSettingsBlock"; // modularized configuration
-
 
 export class HeatmapSettingTab extends PluginSettingTab {
 	private async updateFieldsFromFolder(key: string, folderPath: string) {
@@ -26,7 +18,7 @@ export class HeatmapSettingTab extends PluginSettingTab {
 					Object.keys(fm).forEach((key) => props.add(key));
 				}
 			}
-		}		
+		}
 
 		const config = this.plugin.settings.chartTypes[key];
 		const oldFields = config.fields || {};
@@ -34,13 +26,12 @@ export class HeatmapSettingTab extends PluginSettingTab {
 
 		props.forEach((p) => {
 			newFields[p] = {
-				...oldFields[p],                            // Preserve existing settings
-				enabled: oldFields[p]?.enabled ?? true,     // Default to true if new
+				...oldFields[p], // Preserve existing settings
+				enabled: oldFields[p]?.enabled ?? true, // Default to true if new
 			};
 		});
 
 		config.fields = newFields;
-
 	}
 
 	private _newHeatmapTypeName: string = "";
@@ -63,8 +54,8 @@ export class HeatmapSettingTab extends PluginSettingTab {
 		const container = this.containerEl;
 		while (container.firstChild) {
 			container.removeChild(container.firstChild);
-		}		
-		container.createEl("h1", { text: "Chart Settings" });	
+		}
+		container.createEl("h1", { text: "Chart Settings" });
 
 		const h3 = document.createElement("h3");
 		h3.textContent = "Charts";
@@ -78,13 +69,15 @@ export class HeatmapSettingTab extends PluginSettingTab {
 				key,
 				config,
 				() => this.display(),
-				this.updateFieldsFromFolder.bind(this) 
+				this.updateFieldsFromFolder.bind(this)
 			);
 		}
 		// === Add New Chart Type UI ===
 		new Setting(this.containerEl)
 			.setName("Add New Chart")
-			.setDesc("Unique code block name (e.g., nutrients). This will be used to insert the chart into a note.")
+			.setDesc(
+				"Unique code block name (e.g., nutrients). This will be used to insert the chart into a note."
+			)
 			.addText((text) => {
 				text.setPlaceholder("new-chart-name").onChange((value) => {
 					this._newHeatmapTypeName = value.trim();
@@ -106,7 +99,7 @@ export class HeatmapSettingTab extends PluginSettingTab {
 						marginTop: 30,
 						backgroundColor: "rgba(0,0,0,0)",
 						colorscale: "YlGnBu",
-						reverseScale: false
+						reverseScale: false,
 					};
 
 					await this.plugin.saveSettings();

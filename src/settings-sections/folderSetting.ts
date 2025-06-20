@@ -13,8 +13,7 @@ export function renderFolderSetting(
 		.setDesc("Folder to scan for frontmatter fields");
 
 	folderSetting.addText((text) => {
-		text
-			.setPlaceholder("e.g., Daily Notes")
+		text.setPlaceholder("e.g., Daily Notes")
 			.setValue(config.folder || "")
 			.onChange(async (value) => {
 				config.folder = value.trim();

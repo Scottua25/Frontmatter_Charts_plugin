@@ -9,7 +9,7 @@ export function renderSortOrderSetting(
 	new Setting(container)
 		.setName("Property Sort Order")
 		.setDesc("Order of scanned YAML properties in the UI and charts.")
-		.addDropdown(drop => {
+		.addDropdown((drop) => {
 			drop.addOption("alphabetical", "Alphabetical (A–Z)");
 			drop.addOption("reverse", "Alphabetical (Z–A)");
 			drop.addOption("custom", "Custom (drag to reorder)");

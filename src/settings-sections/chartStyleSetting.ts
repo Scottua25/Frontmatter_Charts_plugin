@@ -13,7 +13,7 @@ export function renderChartStyleSetting(
 	new Setting(block)
 		.setName("Chart Style")
 		.setDesc("Substyle of the selected chart type")
-		.addDropdown(drop => {
+		.addDropdown((drop) => {
 			chartStyleDropdown = drop;
 
 			const updateStyleOptions = () => {
@@ -21,7 +21,7 @@ export function renderChartStyleSetting(
 					drop.selectEl.removeChild(drop.selectEl.firstChild);
 				}
 				const styles = CHART_STYLES[config.chartType] || [];
-				styles.forEach(style => {
+				styles.forEach((style) => {
 					drop.addOption(style, style.charAt(0).toUpperCase() + style.slice(1));
 				});
 
@@ -32,7 +32,7 @@ export function renderChartStyleSetting(
 
 			updateStyleOptions();
 
-			drop.onChange(async val => {
+			drop.onChange(async (val) => {
 				config.chartStyle = val;
 				await plugin.saveSettings();
 				updateRoleFields();

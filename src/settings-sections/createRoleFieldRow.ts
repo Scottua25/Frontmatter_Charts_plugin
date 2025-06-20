@@ -19,7 +19,7 @@ export function createRoleFieldRow(
 	const roleKeys = Object.keys(roleDef.roles);
 	const roleAssignments: Record<string, string[]> = {};
 
-	roleKeys.forEach(roleKey => {
+	roleKeys.forEach((roleKey) => {
 		const current = config[roleKey];
 		if (Array.isArray(current)) roleAssignments[roleKey] = [...current];
 		else if (typeof current === "string") roleAssignments[roleKey] = [current];
@@ -61,7 +61,7 @@ export function createRoleFieldRow(
 				if (isChecked) {
 					if (!list.includes(field)) list.push(field);
 				} else {
-					config[roleKey] = list.filter(f => f !== field);
+					config[roleKey] = list.filter((f) => f !== field);
 				}
 			}
 
@@ -83,12 +83,11 @@ export function createRoleFieldRow(
 
 	// === Pre-populate target if already assigned and allowed
 	if ("allowTarget" in roleDef && roleDef.allowTarget) {
-		const shouldShowTarget =
-			["z", "value", "size"].some(roleKey =>
-				Array.isArray(config[roleKey])
-					? config[roleKey].includes(field)
-					: config[roleKey] === field
-			);
+		const shouldShowTarget = ["z", "value", "size"].some((roleKey) =>
+			Array.isArray(config[roleKey])
+				? config[roleKey].includes(field)
+				: config[roleKey] === field
+		);
 
 		if (shouldShowTarget) {
 			const targetInput = new TextComponent(row);
@@ -116,8 +115,7 @@ export function createRoleFieldRow(
 
 	// === Pre-populate color picker if assigned to y-axis in bar/line
 	if (["bar", "line"].includes(chartType)) {
-		const isYAxis =
-			Array.isArray(config.y) ? config.y.includes(field) : config.y === field;
+		const isYAxis = Array.isArray(config.y) ? config.y.includes(field) : config.y === field;
 
 		const isEnabled = config.fields?.[field]?.enabled;
 		if (isEnabled && isYAxis) {

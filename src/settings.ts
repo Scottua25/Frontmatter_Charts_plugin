@@ -33,7 +33,6 @@ export interface ChartTypeConfig {
 	[roleKey: string]: any; // dynamically store role fields like x, y, labels, etc.
 }
 
-
 export interface ChartSettings {
 	chartTypes: Record<string, ChartTypeConfig>;
 	gridSize?: number;
@@ -51,7 +50,7 @@ export const DEFAULT_SETTINGS: ChartSettings = {
 			chartType: "bar",
 			x: "",
 			y: "",
-			chartColor: "#ff9900"
+			chartColor: "#ff9900",
 		},
 		"Example Line Chart": {
 			folder: "",
@@ -60,7 +59,7 @@ export const DEFAULT_SETTINGS: ChartSettings = {
 			chartType: "line",
 			x: "",
 			y: "",
-			chartColor: "#00ccff"
+			chartColor: "#00ccff",
 		},
 		"Example Pie Chart": {
 			folder: "",
@@ -69,19 +68,17 @@ export const DEFAULT_SETTINGS: ChartSettings = {
 			chartType: "pie",
 			chartColor: "#ff66cc",
 			x: "", // optional, not used by pie
-			y: ""  // optional, not used by pie
-			}
+			y: "", // optional, not used by pie
+		},
 	},
 	gridSize: 10,
-	opacity: 1.0
+	opacity: 1.0,
 };
 
-	// == Chart Styles Definitions ==
+// == Chart Styles Definitions ==
 export const CHART_STYLES: Record<string, string[]> = {
 	bar: ["vertical", "horizontal", "stacked", "grouped", "overlay"],
 	line: ["basic", "line+markers", "scatter", "stepped"],
 	pie: ["pie", "donut"],
 	heatmap: ["standard", "symmetric", "log"],
-  };
-  
-
+};

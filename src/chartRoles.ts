@@ -3,26 +3,26 @@ export const chartRoleDefinitions = {
 		roles: {
 			x: { label: "X Axis (Dates)", single: true },
 			y: { label: "Y Axis (Fields)", single: false },
-			z: { label: "Z Values (Required)", single: false }
+			z: { label: "Z Values (Required)", single: false },
 		},
 		options: ["colorscale", "reverseScale", "cellHeight"],
-        allowTarget: true
+		allowTarget: true,
 	},
 
 	bar: {
 		roles: {
 			x: { label: "X Axis (Categories)", single: true },
-			y: { label: "Y Axis (Values)", single: false }
+			y: { label: "Y Axis (Values)", single: false },
 		},
-		options: ["chartColor"]
+		options: ["chartColor"],
 	},
 
 	line: {
 		roles: {
 			x: { label: "X Axis (Time or Categories)", single: true },
-			y: { label: "Y Axis (Series Values)", single: false }
+			y: { label: "Y Axis (Series Values)", single: false },
 		},
-		options: ["chartColor"]
+		options: ["chartColor"],
 	},
 
 	pie: {
@@ -30,24 +30,24 @@ export const chartRoleDefinitions = {
 			//labels: { label: "Labels (Categories)", single: true },
 			//values: { label: "Values (Sizes)", single: true }
 		},
-		options: ["chartColor"]
+		options: ["chartColor"],
 	},
 
 	scatter: {
 		roles: {
 			x: { label: "X Axis", single: true },
-			y: { label: "Y Axis", single: true }
+			y: { label: "Y Axis", single: true },
 		},
-		options: ["chartColor"]
+		options: ["chartColor"],
 	},
 
 	scatter3d: {
 		roles: {
 			x: { label: "X Axis", single: true },
 			y: { label: "Y Axis", single: true },
-			z: { label: "Z Axis", single: true }
+			z: { label: "Z Axis", single: true },
 		},
-		options: ["chartColor"]
+		options: ["chartColor"],
 	},
 
 	bubble: {
@@ -55,9 +55,9 @@ export const chartRoleDefinitions = {
 			x: { label: "X Axis", single: true },
 			y: { label: "Y Axis", single: true },
 			size: { label: "Bubble Size", single: true },
-			color: { label: "Bubble Color", single: true }
+			color: { label: "Bubble Color", single: true },
 		},
-		options: ["chartColor"]
+		options: ["chartColor"],
 	},
 
 	candlestick: {
@@ -66,29 +66,29 @@ export const chartRoleDefinitions = {
 			open: { label: "Open Price", single: true },
 			high: { label: "High Price", single: true },
 			low: { label: "Low Price", single: true },
-			close: { label: "Close Price", single: true }
+			close: { label: "Close Price", single: true },
 		},
-		options: []
+		options: [],
 	},
 
 	histogram: {
 		roles: {
-			x: { label: "Values", single: false }
+			x: { label: "Values", single: false },
 		},
-		options: ["chartColor"]
+		options: ["chartColor"],
 	},
 
 	box: {
 		roles: {
-			y: { label: "Values", single: false }
+			y: { label: "Values", single: false },
 		},
-		options: ["chartColor"]
+		options: ["chartColor"],
 	},
 
 	violin: {
 		roles: {
-			y: { label: "Values", single: false }
+			y: { label: "Values", single: false },
 		},
-		options: ["chartColor"]
-	}
+		options: ["chartColor"],
+	},
 };

@@ -23,13 +23,13 @@ If your plugin does not need CSS, delete this file.
 	border: 1px solid var(--background-modifier-border);
 	border-radius: 4px;
 	padding: 0.5em;
-  }
+}
 
 .yaml-field-toggle summary {
 	cursor: pointer;
 	font-size: 1em;
-  }
-  
+}
+
 .checkbox-row {
 	display: flex;
 	align-items: center;

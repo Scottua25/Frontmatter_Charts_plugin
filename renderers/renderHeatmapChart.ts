@@ -21,13 +21,15 @@ export default function renderHeatmapChart(
 	const limit = config.limitDays ?? 0;
 	if (limit > 0) dates = dates.slice(-limit);
 
-const allFields = Object.keys(config.fields ?? {});
-	const enabledFields = allFields.filter(k => config.fields[k]?.enabled);
+	const allFields = Object.keys(config.fields ?? {});
+	const enabledFields = allFields.filter((k) => config.fields[k]?.enabled);
 	const fields = getSortedFields(enabledFields, config, true);
 
 	if (!fields.length) {
 		el.createEl("div", { text: "No enabled fields to render." });
-		console.warn("[HEATMAP] Skipping render — no enabled fields.", { config });
+		console.warn("[HEATMAP] Skipping render — no enabled fields.", {
+			config,
+		});
 		return;
 	}
 
@@ -37,8 +39,8 @@ const allFields = Object.keys(config.fields ?? {});
 		return;
 	}
 
-	const z: number[][] = fields.map(field => {
-		const row = dates.map(date => {
+	const z: number[][] = fields.map((field) => {
+		const row = dates.map((date) => {
 			const rawVal = dataMap[date]?.[field];
 			const val = typeof rawVal === "number" ? rawVal : Number(rawVal);
 			const target = config.fields[field]?.target ?? 1;
@@ -48,35 +50,35 @@ const allFields = Object.keys(config.fields ?? {});
 		return row;
 	});
 
-console.debug("[HEATMAP] Rendering chart", { fields, dates, z });
+	console.debug("[HEATMAP] Rendering chart", { fields, dates, z });
 
-const annotations: Partial<Plotly.Annotations>[] = [];
+	const annotations: Partial<Plotly.Annotations>[] = [];
 
-fields.forEach((field, rowIdx) => {
-	if (typeof field !== "string" || !(field in config.fields)) return;
+	fields.forEach((field, rowIdx) => {
+		if (typeof field !== "string" || !(field in config.fields)) return;
 
-	dates.forEach((date, colIdx) => {
-		const rawVal = dataMap[date]?.[field];
-		const val = typeof rawVal === "number" ? rawVal : Number(rawVal);
-		if (isNaN(val)) return;
+		dates.forEach((date, colIdx) => {
+			const rawVal = dataMap[date]?.[field];
+			const val = typeof rawVal === "number" ? rawVal : Number(rawVal);
+			if (isNaN(val)) return;
 
-		const target = config.fields[field]?.target ?? 1;
-		const pct = target > 0 ? (val / target) * 100 : 0;
+			const target = config.fields[field]?.target ?? 1;
+			const pct = target > 0 ? (val / target) * 100 : 0;
 
-		if (pct > 100) {
-			annotations.push({
-				x: date,
-				y: field,
-				text: "X",
-				showarrow: false,
-				font: {
-					color: config.fontColor || "#000",
-					size: config.fontSize || 12,
-				}
-			});
-		}
+			if (pct > 100) {
+				annotations.push({
+					x: date,
+					y: field,
+					text: "X",
+					showarrow: false,
+					font: {
+						color: config.fontColor || "#000",
+						size: config.fontSize || 12,
+					},
+				});
+			}
+		});
 	});
-});
 
 	const cellHeight = Math.max(10, Math.min(100, config.cellHeight ?? 30));
 
@@ -89,39 +91,41 @@ fields.forEach((field, rowIdx) => {
 			r: config.marginRight ?? 30,
 		},
 		xaxis: {
-			type: 'category',
+			type: "category",
 			tickangle: -45,
-			tickfont: { size: config.fontSize ?? 12 }
+			tickfont: { size: config.fontSize ?? 12 },
 		},
 		yaxis: {
-			type: 'category',
+			type: "category",
 			automargin: true,
-			tickfont: { size: config.fontSize ?? 12 }
+			tickfont: { size: config.fontSize ?? 12 },
 		},
 		height: 50 + fields.length * cellHeight,
 		plot_bgcolor: config.backgroundChartColor ?? "rgba(0,0,0,0)",
 		paper_bgcolor: config.backgroundPageColor ?? "rgba(0,0,0,0)",
 		font: {
 			color: config.fontColor ?? "#ffffff",
-			size: config.fontSize ?? 12
+			size: config.fontSize ?? 12,
 		},
-		annotations
+		annotations,
 	};
 
-    const data = [{
-        z,
-        x: dates,
-        y: fields,
-        type: 'heatmap',
-        colorscale: config.colorscale || 'YlGnBu',
-        showscale: config.showScale ?? true,
-        reversescale: config.reverseScale ?? false,
-        zmin: 0,
-        zmax: 100
-    }];
-    
+	const data = [
+		{
+			z,
+			x: dates,
+			y: fields,
+			type: "heatmap",
+			colorscale: config.colorscale || "YlGnBu",
+			showscale: config.showScale ?? true,
+			reversescale: config.reverseScale ?? false,
+			zmin: 0,
+			zmax: 100,
+		},
+	];
+
 	const chartDiv = el.createDiv({ cls: "heatmap-chart" });
 	// @ts-ignore
-    
+
 	Plotly.newPlot(chartDiv, data, layout, { displayModeBar: false });
 }

@@ -7,7 +7,7 @@ export function enableDragAndDrop(
 	let draggedEl: HTMLElement | null = null;
 
 	// Add draggable and drag handlers to each child
-	Array.from(container.children).forEach(child => {
+	Array.from(container.children).forEach((child) => {
 		if (!(child instanceof HTMLElement)) return;
 
 		child.draggable = true;
@@ -41,7 +41,7 @@ export function enableDragAndDrop(
 	// Save new order on drop
 	container.addEventListener("drop", async () => {
 		const newOrder = Array.from(container.children)
-			.map(el => (el as HTMLElement).dataset.field)
+			.map((el) => (el as HTMLElement).dataset.field)
 			.filter(Boolean) as string[];
 
 		config.customOrder = newOrder;

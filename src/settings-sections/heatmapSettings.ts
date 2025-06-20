@@ -12,8 +12,7 @@ export function renderHeatmapSettings(
 		.setName("Heatmap Cell Height")
 		.setDesc("Pixel height per row in the heatmap")
 		.addText((text) => {
-			text
-				.setPlaceholder("30")
+			text.setPlaceholder("30")
 				.setValue((config.cellHeight ?? 30).toString())
 				.onChange(async (val) => {
 					const parsed = parseInt(val);
