@@ -20,7 +20,7 @@ export default function renderLineChart(
 		.sort()
 		.slice(-config.limitDays || undefined);
 
-	const x = dates.map((date) => dataMap[date]?.[config.x] ?? date);
+	const x = dates.map((date) => ((dataMap[date] as Record<string, unknown>)[config.x as string] ?? date));
 	const yFields = Array.isArray(config.y) ? config.y : [config.y];
 
 	const data = yFields.map((yField) => {

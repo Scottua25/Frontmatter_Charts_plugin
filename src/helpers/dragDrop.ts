@@ -1,6 +1,8 @@
+import type { ChartSortableConfig } from "../types";
+
 export function enableDragAndDrop(
 	container: HTMLElement,
-	config: any,
+	config: ChartSortableConfig,
 	key: string,
 	saveSettings: () => Promise<void>
 ) {

@@ -1,9 +1,10 @@
 import { Setting } from "obsidian";
 import type ChartDashboardPlugin from "../../main";
+import type { ChartConfig } from "src/types";
 
 export function renderHeatmapSettings(
 	block: HTMLElement,
-	config: any,
+	config: ChartConfig,
 	plugin: ChartDashboardPlugin
 ): void {
 	if (config.chartType !== "heatmap") return;

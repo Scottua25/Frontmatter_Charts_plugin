@@ -1,8 +1,9 @@
 import { Setting } from "obsidian";
+import type { SortableFieldConfig } from "src/types";
 
 export function renderSortOrderSetting(
 	container: HTMLElement,
-	config: any,
+	config: SortableFieldConfig,
 	saveSettings: () => Promise<void>,
 	refreshUI: () => void
 ) {
@@ -17,7 +18,7 @@ export function renderSortOrderSetting(
 			drop.setValue(config.sortOrder || "alphabetical");
 
 			drop.onChange(async (value) => {
-				config.sortOrder = value;
+				config.sortOrder = value as "alphabetical" | "reverse" | "custom";
 				await saveSettings();
 				refreshUI(); // re-renders role fields
 			});

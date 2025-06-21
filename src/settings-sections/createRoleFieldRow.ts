@@ -1,13 +1,14 @@
 import { ToggleComponent, TextComponent } from "obsidian";
 import type ChartDashboardPlugin from "../../main";
 import { chartRoleDefinitions } from "../chartRoles";
+import type { ChartConfigWithFieldMeta } from "src/types";
 
 type ChartType = keyof typeof chartRoleDefinitions;
 
 export function createRoleFieldRow(
 	field: string,
 	chartType: ChartType,
-	config: any,
+	config: ChartConfigWithFieldMeta & Record<string, unknown>,
 	plugin: ChartDashboardPlugin,
 	forceRerender?: () => void
 ): HTMLElement {

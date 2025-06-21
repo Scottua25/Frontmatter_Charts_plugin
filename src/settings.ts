@@ -30,7 +30,7 @@ export interface ChartTypeConfig {
 	backgroundChartColor?: string;
 	backgroundPageColor?: string;
 	cellHeight?: number;
-	[roleKey: string]: any; // dynamically store role fields like x, y, labels, etc.
+	[roleKey: string]: unknown; // dynamically store role fields like x, y, labels, etc.
 }
 
 export interface ChartSettings {

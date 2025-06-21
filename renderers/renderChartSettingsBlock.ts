@@ -1,4 +1,4 @@
-import { App, Setting, DropdownComponent } from "obsidian";
+import { App } from "obsidian";
 import type ChartDashboardPlugin from "../main";
 import { renderFolderSetting } from "../src/settings-sections/folderSetting";
 import { renderChartTypeSetting } from "../src/settings-sections/chartTypeSetting";
@@ -10,6 +10,7 @@ import { renderColorSettings } from "../src/settings-sections/colorSettings";
 import { renderChartRoleFields } from "../renderers/renderChartRoleFields";
 import { renderDeleteChartSetting } from "../src/settings-sections/deleteChartSetting";
 import { renderSortOrderSetting } from "../src/settings-sections/sortOrderSettings";
+import type { ChartConfig } from "../src/types";
 
 // Main exported function
 export async function renderChartSettingsBlock(
@@ -17,7 +18,7 @@ export async function renderChartSettingsBlock(
 	plugin: ChartDashboardPlugin,
 	container: HTMLElement,
 	key: string,
-	config: any,
+	config: ChartConfig,
 	refresh: () => void,
 	updateFieldsFromFolder: (key: string, folder: string) => Promise<void>
 ): Promise<void> {
@@ -39,8 +40,6 @@ export async function renderChartSettingsBlock(
 	const block = document.createElement("div");
 	block.classList.add("heatmap-config-block");
 	detailsEl.appendChild(block);
-
-	let roleFieldsContainer: HTMLElement;
 
 	function updateRoleFields() {
 		const updatedFields = Object.keys(config.fields || {});
@@ -71,10 +70,10 @@ export async function renderChartSettingsBlock(
 	renderSortOrderSetting(block, config, plugin.saveSettings.bind(plugin), updateRoleFields);
 	renderHeatmapSettings(block, config, plugin);
 
-	const rolesContainer = block.createDiv({ cls: "chart-role-fields" });
-	roleFieldsContainer = rolesContainer.createDiv({
-		cls: "role-fields-container",
-	});
+	const roleFieldsContainer = block
+	.createDiv({ cls: "chart-role-fields" })
+	.createDiv({ cls: "role-fields-container" });
+
 	updateRoleFields();
 
 	renderMarginSetting(block, config, plugin);

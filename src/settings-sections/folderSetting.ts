@@ -1,8 +1,9 @@
 import { Setting, ButtonComponent } from "obsidian";
+import type { FolderConfig } from "src/types";
 
 export function renderFolderSetting(
 	block: HTMLElement,
-	config: any,
+	config: FolderConfig,
 	plugin: { saveSettings: () => Promise<void> },
 	key: string,
 	updateFieldsFromFolder: (key: string, folder: string) => Promise<void>,

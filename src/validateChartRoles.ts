@@ -5,10 +5,11 @@ type ChartRoleDef = {
 
 export function validateChartRoles(
 	chartType: string,
-	config: any
+	config: Record<string, unknown>
 ): { valid: boolean; missing: string[] } {
-	const roleDef = chartType && chartType in config ? config[chartType] : null;
-	const requiredRoles = config[chartType]?.roles || {};
+	
+	const chartConfig = config[chartType] as { roles?: Record<string, ChartRoleDef> } | undefined;
+	const requiredRoles = chartConfig?.roles || {};
 
 	const missing: string[] = [];
 

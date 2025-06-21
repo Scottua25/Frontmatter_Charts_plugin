@@ -1,10 +1,11 @@
 import { Setting } from "obsidian";
 import type ChartDashboardPlugin from "../../main";
 import { addInlineColorPicker } from "../colorUtils";
+import type { FontConfig } from "src/types";
 
 export function renderFontSettings(
 	block: HTMLElement,
-	config: any,
+	config: FontConfig,
 	plugin: ChartDashboardPlugin
 ): void {
 	const fontColorSetting = new Setting(block)

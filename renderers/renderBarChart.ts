@@ -46,7 +46,7 @@ export default function renderBarChart(
 
 	const data = yFields.map((yField) => {
 		const y = dates.map((date) => dataMap[date]?.[yField] ?? 0);
-		const x = dates.map((date) => dataMap[date]?.[config.x] ?? date);
+		const x = dates.map((date) => ((dataMap[date] as Record<string, unknown>)[config.x as string] ?? date));
 
 		const color = config.fields?.[yField]?.color || config.chartColor || "#888";
 

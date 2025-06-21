@@ -1,7 +1,12 @@
 import { Setting } from "obsidian";
-import type ChartDashboardPlugin from "../../main";
+import type { MarginConfig } from "src/types";
 
-export function renderMarginSetting(container: HTMLElement, config: any, plugin: any): void {
+export function renderMarginSetting(
+		container: HTMLElement,
+		config: MarginConfig,
+		plugin: { saveSettings: () => Promise<void> }
+): void {
+
 	const marginDefaults = {
 		marginTop: 30,
 		marginBottom: 40,

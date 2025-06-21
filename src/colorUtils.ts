@@ -90,7 +90,9 @@ export function addInlineColorPicker(
 				return "#" + [r, g, b].map((x) => x.toString(16).padStart(2, "0")).join("");
 			}
 			if (initialColor.startsWith("#")) return initialColor;
-		} catch (_) {}
+		} catch {
+			// ignore error if parsing fails
+		}
 		return "#000000";
 	})();
 

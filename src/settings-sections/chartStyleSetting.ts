@@ -1,20 +1,19 @@
-import { Setting, DropdownComponent } from "obsidian";
+import { Setting } from "obsidian";
 import type ChartDashboardPlugin from "../../main";
 import { CHART_STYLES } from "../settings";
+import type { ChartStyleConfig, DropdownWithCustomUpdate } from "../types";
 
 export function renderChartStyleSetting(
 	block: HTMLElement,
-	config: any,
+	config: ChartStyleConfig,
 	plugin: ChartDashboardPlugin,
 	updateRoleFields: () => void
 ): void {
-	let chartStyleDropdown: DropdownComponent;
-
+	
 	new Setting(block)
 		.setName("Chart Style")
 		.setDesc("Substyle of the selected chart type")
 		.addDropdown((drop) => {
-			chartStyleDropdown = drop;
 
 			const updateStyleOptions = () => {
 				while (drop.selectEl.firstChild) {
@@ -38,7 +37,7 @@ export function renderChartStyleSetting(
 				updateRoleFields();
 			});
 
-			(drop as any)._updateStyleOptions = updateStyleOptions;
-			config._chartStyleDropdown = drop;
+			(drop as DropdownWithCustomUpdate)._updateStyleOptions = updateStyleOptions;
+			config._chartStyleDropdown = drop as DropdownWithCustomUpdate;
 		});
 }

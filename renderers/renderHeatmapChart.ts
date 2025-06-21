@@ -23,7 +23,10 @@ export default function renderHeatmapChart(
 
 	const allFields = Object.keys(config.fields ?? {});
 	const enabledFields = allFields.filter((k) => config.fields[k]?.enabled);
-	const fields = getSortedFields(enabledFields, config, true);
+	const fields = getSortedFields(enabledFields, {
+		sortOrder: config.sortOrder as "alphabetical" | "reverse" | "custom" | undefined,
+		customOrder: config.customOrder as string[] | undefined
+	}, true);
 
 	if (!fields.length) {
 		el.createEl("div", { text: "No enabled fields to render." });

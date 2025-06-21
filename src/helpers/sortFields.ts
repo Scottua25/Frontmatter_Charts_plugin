@@ -1,4 +1,11 @@
-export function getSortedFields(fields: string[], config: any, reverseForChart = false): string[] {
+import type { SortableFieldConfig } from "../types";
+
+export function getSortedFields(
+	fields: 
+		string[], 
+		config: SortableFieldConfig, 
+		reverseForChart = false
+	): string[] {
 	const sortOrder = config.sortOrder || "alphabetical";
 
 	if (sortOrder === "alphabetical") {

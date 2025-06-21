@@ -1,41 +1,10 @@
-import { App, Setting, ButtonComponent, DropdownComponent } from "obsidian";
+import { App, Setting, ButtonComponent } from "obsidian";
 import type ChartDashboardPlugin from "../main";
 import { addColorWithAlphaSetting, addInlineColorPicker } from "./colorUtils";
 import { renderChartRoleFields } from "../renderers/renderChartRoleFields";
 import { chartRendererMap } from "../src/chartRendererMap";
 import { CHART_STYLES } from "../src/settings";
-
-type ChartType =
-	| "heatmap"
-	| "bar"
-	| "line"
-	| "pie"
-	| "scatter"
-	| "scatter3d"
-	| "bubble"
-	| "candlestick"
-	| "histogram"
-	| "box"
-	| "violin";
-
-interface ChartConfig {
-	chartType: ChartType;
-	chartStyle?: string;
-	cellHeight?: number;
-	marginTop?: number;
-	fontColor?: string;
-	fontSize?: number;
-	backgroundPageColor?: string;
-	colorscale?: string;
-	reverseScale?: boolean;
-	chartColor?: string;
-	folder?: string;
-	fields?: Record<string, unknown>;
-}
-
-type DropdownWithCustomUpdate = DropdownComponent & {
-	_updateStyleOptions?: () => void;
-};
+import type { ChartConfig, ChartType, DropdownWithCustomUpdate } from "../src/types";
 
 // Must be async because we use await inside
 export async function renderChartSettingsBlock(

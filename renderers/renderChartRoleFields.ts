@@ -3,11 +3,12 @@ import { createRoleFieldRow } from "../src/settings-sections/createRoleFieldRow"
 import { chartRoleDefinitions } from "../src/chartRoles";
 import { getSortedFields } from "../src/helpers/sortFields";
 import { enableDragAndDrop } from "../src/helpers/dragDrop";
+import type { ChartConfig } from "../src/types";
 
 export function renderChartRoleFields(
 	container: HTMLElement,
 	chartType: keyof typeof chartRoleDefinitions,
-	config: any,
+	config: ChartConfig,
 	availableFields: string[],
 	plugin: ChartDashboardPlugin,
 	forceRerender: () => void
@@ -18,7 +19,10 @@ export function renderChartRoleFields(
 	}
 
 	// Use sorted field order
-	const sortedFields = getSortedFields(availableFields, config);
+	const sortedFields = getSortedFields(availableFields, {
+		sortOrder: config.sortOrder === "usage" ? "alphabetical" : config.sortOrder,
+		customOrder: config.customOrder ?? [],
+	});	
 	if (!Array.isArray(sortedFields)) {
 		console.error("[ROLE FIELDS] sortedFields is not an array", sortedFields);
 		return;
@@ -31,8 +35,16 @@ export function renderChartRoleFields(
 
 	// Enable drag-and-drop only in custom sort mode
 	if (config.sortOrder === "custom") {
-		enableDragAndDrop(container, config, chartType, async () => {
-			await plugin.saveSettings();
-		});
+		enableDragAndDrop(
+			container,
+			{
+				sortOrder: config.sortOrder,
+				customOrder: [], // default empty array
+			},
+			chartType,
+			async () => {
+				await plugin.saveSettings();
+			}
+		);
 	}
 }

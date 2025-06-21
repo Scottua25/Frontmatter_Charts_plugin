@@ -5,12 +5,12 @@ import {
 	getColorscaleGradient,
 } from "../colorUtils";
 import { Setting, ToggleComponent } from "obsidian";
-import Plotly from "plotly.js-dist-min";
 import { customColorscales } from "../helpers/customColorScales";
+import { ChartConfig } from "src/types";
 
 export function renderColorSettings(
 	block: HTMLElement,
-	config: any,
+	config: ChartConfig,
 	plugin: ChartDashboardPlugin
 ): void {
 	const isHeatmap = config.chartType === "heatmap";

@@ -2,6 +2,7 @@ import { App, PluginSettingTab, Setting, TFolder, TFile, MarkdownView } from "ob
 import type ChartDashboardPlugin from "../main";
 //import { renderChartSettingsBlock } from "./chartSettingsBlock"; // monolithic ui configuration file
 import { renderChartSettingsBlock } from "../renderers/renderChartSettingsBlock"; // modularized configuration
+import type { ChartFieldConfig, ChartConfig } from "./types";
 
 export class HeatmapSettingTab extends PluginSettingTab {
 	private async updateFieldsFromFolder(key: string, folderPath: string) {
@@ -22,7 +23,7 @@ export class HeatmapSettingTab extends PluginSettingTab {
 
 		const config = this.plugin.settings.chartTypes[key];
 		const oldFields = config.fields || {};
-		const newFields: Record<string, any> = {};
+		const newFields: Record<string, ChartFieldConfig> = {};
 
 		props.forEach((p) => {
 			newFields[p] = {
@@ -62,16 +63,20 @@ export class HeatmapSettingTab extends PluginSettingTab {
 		container.appendChild(h3);
 
 		for (const [key, config] of Object.entries(this.plugin.settings.chartTypes)) {
+			if (!config.chartType) {
+				config.chartType = "heatmap";
+			}
 			await renderChartSettingsBlock(
 				this.app,
 				this.plugin,
 				container,
 				key,
-				config,
+				config as ChartConfig,
 				() => this.display(),
 				this.updateFieldsFromFolder.bind(this)
 			);
 		}
+		
 		// === Add New Chart Type UI ===
 		new Setting(this.containerEl)
 			.setName("Add New Chart")
