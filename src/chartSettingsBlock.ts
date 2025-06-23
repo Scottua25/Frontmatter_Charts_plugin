@@ -14,11 +14,12 @@ export async function renderChartSettingsBlock(
 	key: string,
 	config: ChartConfig,
 	refresh: () => void,
-	updateFieldsFromFolder: (key: string, folder: string) => Promise<void>
+	updateFieldsFromFolder: (key: string, folder: string) => Promise<void>,
+	expandByDefault: boolean = false
 ): Promise<void> {
 	const detailsEl = document.createElement("details");
 	detailsEl.classList.add("chart-config-toggle");
-	// detailsEl.open = true; // or false if you want them collapsed by default
+	if (expandByDefault) detailsEl.open = true;
 	container.appendChild(detailsEl);
 
 	const summaryEl = document.createElement("summary");
@@ -36,8 +37,6 @@ export async function renderChartSettingsBlock(
 	block.classList.add("heatmap-config-block");
 	detailsEl.appendChild(block);
 
-	// const rolesContainer = block.createDiv({ cls: "chart-role-fields" });
-
 	let roleFieldsContainer: HTMLElement;
 
 	function updateRoleFields() {
@@ -50,7 +49,7 @@ export async function renderChartSettingsBlock(
 			config,
 			updatedFields,
 			plugin,
-			updateRoleFields // Pass itself for re-renders from inside roleFields
+			updateRoleFields
 		);
 
 		requestAnimationFrame(() => {
@@ -139,7 +138,6 @@ export async function renderChartSettingsBlock(
 				updateRoleFields();
 			});
 
-			// Save update function so we can call it later
 			(chartStyleDropdown as DropdownWithCustomUpdate)._updateStyleOptions = updateStyleOptions;		});
 
 	// === Heatmap Cell Height ===

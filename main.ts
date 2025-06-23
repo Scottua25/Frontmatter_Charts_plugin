@@ -3,6 +3,7 @@ import { chartRendererMap } from "./src/chartRendererMap";
 import { DEFAULT_SETTINGS, ChartSettings } from "./src/settings";
 import { HeatmapSettingTab } from "./src/settings-tab";
 import { validateChartRoles } from "src/validateChartRoles";
+import { NewChartModal } from "./src/newChartModal";
 
 declare global {
 	interface HTMLElement {
@@ -15,6 +16,8 @@ declare global {
 		): HTMLElementTagNameMap[K];
 
 		createDiv(options?: { cls?: string }): HTMLDivElement;
+
+		setAttr(name: string, value: string): void;
 	}
 }
 
@@ -47,19 +50,28 @@ function renderChart(app: App, el: HTMLElement, type: string, settings: ChartSet
 
 export default class ChartDashboardPlugin extends Plugin {
 	settings!: ChartSettings;
+	public registeredProcessors: Record<string, (source: string, el: HTMLElement) => Promise<void>> = {};
 
 	async onload() {
-		console.log("Loading Heatmap Dashboard Plugin");
+		console.log("Loading Frontmatter Charts Plugin");
 
 		// Load settings
 		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
 
-		// Register a single code block processor for all charts
-		this.registerMarkdownCodeBlockProcessor("insert-chart", async (source, el) => {
+		// Define and store the insert-chart processor
+		this.registeredProcessors["insert-chart"] = async (source, el) => {
 			const chartKey = source.trim().split("\n")[0].trim();
 			const config = this.settings.chartTypes[chartKey];
 
-			if (!config || !config.chartType || !(config.chartType in chartRendererMap)) {
+			if (!config) {
+				new NewChartModal(this.app, chartKey, this).open();
+				el.createEl("div", {
+					text: `Chart config '${chartKey}' not found. Opening configuration modal...`,
+				});
+				return;
+			}
+
+			if (!config.chartType || !(config.chartType in chartRendererMap)) {
 				el.createEl("div", {
 					text: `Missing or invalid chart config for '${chartKey}'`,
 				});
@@ -67,6 +79,7 @@ export default class ChartDashboardPlugin extends Plugin {
 			}
 
 			try {
+				el.setAttr("data-chart-key", chartKey);
 				renderChart(this.app, el, chartKey, this.settings);
 			} catch (err) {
 				console.error(`Chart rendering failed for '${chartKey}':`, err);
@@ -74,7 +87,11 @@ export default class ChartDashboardPlugin extends Plugin {
 					text: `Chart rendering failed for '${chartKey}'. See console.`,
 				});
 			}
-		});
+		};
+
+		// Register the processor
+		this.registerMarkdownCodeBlockProcessor("insert-chart", this.registeredProcessors["insert-chart"]);
+
 
 		// Add settings tab
 		this.addSettingTab(new HeatmapSettingTab(this.app, this));

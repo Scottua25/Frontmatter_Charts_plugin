@@ -29,7 +29,7 @@ export function renderColorSettings(
 		}
 	);
 
-	if (isHeatmap) {
+	if (["heatmap", "bar", "line"].includes(config.chartType)) {
 		addColorWithAlphaSetting(
 			block,
 			"Chart Area Background",

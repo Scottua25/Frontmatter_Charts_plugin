@@ -10,6 +10,7 @@ import { renderColorSettings } from "../src/settings-sections/colorSettings";
 import { renderChartRoleFields } from "../renderers/renderChartRoleFields";
 import { renderDeleteChartSetting } from "../src/settings-sections/deleteChartSetting";
 import { renderSortOrderSetting } from "../src/settings-sections/sortOrderSettings";
+import { renderApplyChartSettings } from "../src/settings-sections/applyChartSettings";
 import type { ChartConfig } from "../src/types";
 
 // Main exported function
@@ -79,5 +80,6 @@ export async function renderChartSettingsBlock(
 	renderMarginSetting(block, config, plugin);
 	renderFontSettings(block, config, plugin);
 	renderColorSettings(block, config, plugin);
+	renderApplyChartSettings(block, key, config, app, plugin);
 	renderDeleteChartSetting(block, key, plugin, refresh);
 }

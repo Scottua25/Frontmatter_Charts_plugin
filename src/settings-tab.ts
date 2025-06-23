@@ -1,39 +1,20 @@
-import { App, PluginSettingTab, Setting, TFolder, TFile, MarkdownView } from "obsidian";
+import { App, PluginSettingTab, Setting, MarkdownView } from "obsidian";
 import type ChartDashboardPlugin from "../main";
-//import { renderChartSettingsBlock } from "./chartSettingsBlock"; // monolithic ui configuration file
-import { renderChartSettingsBlock } from "../renderers/renderChartSettingsBlock"; // modularized configuration
-import type { ChartFieldConfig, ChartConfig } from "./types";
+import { renderChartSettingsBlock } from "../renderers/renderChartSettingsBlock";
+import type { ChartConfig, ChartFieldConfig } from "./types";
+import { updateFieldsFromFolder } from "../src/helpers/updateFieldsFromFolder";
 
 export class HeatmapSettingTab extends PluginSettingTab {
 	private async updateFieldsFromFolder(key: string, folderPath: string) {
-		const folder = this.app.vault.getAbstractFileByPath(folderPath);
-		if (!(folder instanceof TFolder)) return;
-
-		const props = new Set<string>();
-
-		for (const file of folder.children) {
-			if (file instanceof TFile && file.extension === "md") {
-				const cache = this.app.metadataCache.getFileCache(file);
-				const fm = cache?.frontmatter;
-				if (fm && typeof fm === "object") {
-					Object.keys(fm).forEach((key) => props.add(key));
-				}
-			}
-		}
-
 		const config = this.plugin.settings.chartTypes[key];
-		const oldFields = config.fields || {};
-		const newFields: Record<string, ChartFieldConfig> = {};
-
-		props.forEach((p) => {
-			newFields[p] = {
-				...oldFields[p], // Preserve existing settings
-				enabled: oldFields[p]?.enabled ?? true, // Default to true if new
-			};
-		});
-
-		config.fields = newFields;
+		const updatedFields = await updateFieldsFromFolder(
+			this.app,
+			folderPath,
+			config.fields as Record<string, ChartFieldConfig>
+		);
+		config.fields = updatedFields;
 	}
+	
 
 	private _newHeatmapTypeName: string = "";
 

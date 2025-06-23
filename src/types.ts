@@ -31,6 +31,7 @@ export interface ChartConfig {
 	fields?: Record<string, FieldConfig>;
 	sortOrder?: "custom" | "alphabetical" | "usage" | "reverse"; // optional if applicable
 	customOrder?: string[];
+	limitDays?: number;
 
 	[key: string]: unknown;
 }
@@ -40,7 +41,7 @@ export type DropdownWithCustomUpdate = DropdownComponent & {
 	_updateStyleOptions?: () => void;
 };
 
-export interface ChartFieldConfig {
+export interface ChartFieldConfig extends FieldConfig {
 	enabled: boolean;
 	[option: string]: unknown;
 }
