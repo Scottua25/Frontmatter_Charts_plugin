@@ -11,6 +11,7 @@ import { renderChartRoleFields } from "../renderers/renderChartRoleFields";
 import { renderDeleteChartSetting } from "../src/settings-sections/deleteChartSetting";
 import { renderSortOrderSetting } from "../src/settings-sections/sortOrderSettings";
 import { renderApplyChartSettings } from "../src/settings-sections/applyChartSettings";
+import { renderLimitEntriesSetting } from "../src/settings-sections/limitEntriesSetting";
 import type { ChartConfig } from "../src/types";
 
 // Main exported function
@@ -75,8 +76,9 @@ export async function renderChartSettingsBlock(
 	.createDiv({ cls: "chart-role-fields" })
 	.createDiv({ cls: "role-fields-container" });
 
-	updateRoleFields();
+	await updateRoleFields();
 
+	renderLimitEntriesSetting(block, config, plugin);
 	renderMarginSetting(block, config, plugin);
 	renderFontSettings(block, config, plugin);
 	renderColorSettings(block, config, plugin);

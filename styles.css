@@ -41,6 +41,7 @@ If your plugin does not need CSS, delete this file.
 	flex-direction: column;
 	gap: 4px;
 	margin-top: 1em;
+	margin-bottom: 1em;
 }
 
 .role-field-row {

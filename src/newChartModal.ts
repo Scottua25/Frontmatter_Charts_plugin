@@ -15,6 +15,7 @@ import { renderMarginSetting } from "../src/settings-sections/marginSetting";
 import { renderFontSettings } from "../src/settings-sections/fontSettings";
 import { renderColorSettings } from "../src/settings-sections/colorSettings";
 import { renderSortOrderSetting } from "../src/settings-sections/sortOrderSettings";
+import { renderLimitEntriesSetting as renderLimitEntriesSetting } from "./settings-sections/limitEntriesSetting";
 import type { ChartTypeConfig } from "../src/settings";
 
 export class NewChartModal extends Modal {
@@ -87,9 +88,11 @@ export class NewChartModal extends Modal {
         // === Create Role Fields Container AFTER sortOrder and heatmapSettings ===
         const roleFieldsWrapper = block.createDiv({ cls: "chart-role-fields" });
         const roleFieldsContainer = roleFieldsWrapper.createDiv({ cls: "role-fields-container" });
-    
+        const limitEntriesContainer = block.createDiv({ cls: "limit-entries-setting" });
+
         await updateRoleFields(); // Initial render
-    
+
+        renderLimitEntriesSetting(limitEntriesContainer, this.tempConfig, this.plugin);
         renderMarginSetting(block, this.tempConfig, this.plugin);
         renderFontSettings(block, this.tempConfig, this.plugin);
 
