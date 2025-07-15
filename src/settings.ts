@@ -31,6 +31,7 @@ export interface ChartTypeConfig {
 	backgroundPageColor?: string;
 	cellHeight?: number;
 	[roleKey: string]: unknown; // dynamically store role fields like x, y, labels, etc.
+	heatmapCustomGradient?: string[];
 }
 
 export interface ChartSettings {
@@ -39,6 +40,7 @@ export interface ChartSettings {
 	opacity?: number;
 	// maxRDA: number;
 	// limitDays: number;
+	customGradient?: string[];
 }
 
 export const DEFAULT_SETTINGS: ChartSettings = {

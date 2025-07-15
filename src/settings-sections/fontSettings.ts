@@ -9,7 +9,7 @@ export function renderFontSettings(
 	plugin: ChartDashboardPlugin
 ): void {
 	const fontColorSetting = new Setting(block)
-		.setName("Font Color")
+		.setName("Font color")
 		.setDesc("Text color for values inside the chart")
 		.addText((text) => {
 			text.setPlaceholder("#ffffff")
@@ -30,7 +30,7 @@ export function renderFontSettings(
 	});
 
 	new Setting(block)
-		.setName("Font Size")
+		.setName("Font size")
 		.setDesc("Font size for labels")
 		.addText((text) => {
 			text.setPlaceholder("12")

@@ -8,7 +8,7 @@ export function renderDeleteChartSetting(
 	refresh: () => void
 ): void {
 	new Setting(block)
-		.setName("Delete Chart")
+		.setName("Delete chart")
 		.setDesc("Delete this chart. CANNOT BE UNDONE! BE SURE!")
 		.addButton((btn) =>
 			btn

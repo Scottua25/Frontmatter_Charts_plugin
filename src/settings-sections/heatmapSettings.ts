@@ -10,7 +10,7 @@ export function renderHeatmapSettings(
 	if (config.chartType !== "heatmap") return;
 
 	new Setting(block)
-		.setName("Heatmap Cell Height")
+		.setName("Heatmap cell height")
 		.setDesc("Pixel height per row in the heatmap")
 		.addText((text) => {
 			text.setPlaceholder("30")

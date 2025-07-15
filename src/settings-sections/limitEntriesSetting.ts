@@ -9,7 +9,7 @@ export function renderLimitEntriesSetting(
 ): void {
 
 	new Setting(block)
-		.setName("Limit Entries")
+		.setName("Limit entries")
 		.setDesc("Show only the most recent N entries on the chart (optional). Set to 0 to include all.")
 		.addText((text) => {
 			text

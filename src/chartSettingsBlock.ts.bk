@@ -5,6 +5,7 @@ import { renderChartRoleFields } from "../renderers/renderChartRoleFields";
 import { chartRendererMap } from "../src/chartRendererMap";
 import { CHART_STYLES } from "../src/settings";
 import type { ChartConfig, ChartType, DropdownWithCustomUpdate } from "../src/types";
+import { GradientModal } from "./gradientModal";
 
 // Must be async because we use await inside
 export async function renderChartSettingsBlock(
@@ -281,6 +282,24 @@ export async function renderChartSettingsBlock(
 			});
 		});
 
+	const customColorscaleSetting = new Setting(block)
+		.setName("Custom Heatmap Colorscale")
+		.setDesc("Define a global custom gradient for all heatmaps.")
+		.addButton(btn =>
+			btn.setButtonText("Edit")
+				.onClick(() => {
+					new GradientModal(
+						plugin.app,
+						Array.isArray(config.heatmapCustomGradient) ? config.heatmapCustomGradient : [],
+						(colors) => {
+							config.heatmapCustomGradient = colors;
+							plugin.saveSettings();
+						}
+					).open();					
+				}
+			)
+		);
+
 	// === Chart Color (Bar/Line only)
 	const chartColorSetting = new Setting(block)
 		.setName("Chart Color")
@@ -335,6 +354,8 @@ export async function renderChartSettingsBlock(
 		reverseScaleSetting.settingEl.style.display = isHeatmap ? "" : "none";
 		if (heatmapCellHeightSetting)
 			heatmapCellHeightSetting.settingEl.style.display = isHeatmap ? "" : "none";
+		if (customColorscaleSetting)
+			customColorscaleSetting.settingEl.style.display = isHeatmap ? "" : "none";
 	}
 
 	// Finally, call once to initialize visibility

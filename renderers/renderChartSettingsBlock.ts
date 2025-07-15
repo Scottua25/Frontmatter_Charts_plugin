@@ -12,6 +12,7 @@ import { renderDeleteChartSetting } from "../src/settings-sections/deleteChartSe
 import { renderSortOrderSetting } from "../src/settings-sections/sortOrderSettings";
 import { renderApplyChartSettings } from "../src/settings-sections/applyChartSettings";
 import { renderLimitEntriesSetting } from "../src/settings-sections/limitEntriesSetting";
+import { renderCustomColorscaleSetting } from "../src/settings-sections/customColorscaleSetting";
 import type { ChartConfig } from "../src/types";
 
 // Main exported function
@@ -82,6 +83,7 @@ export async function renderChartSettingsBlock(
 	renderMarginSetting(block, config, plugin);
 	renderFontSettings(block, config, plugin);
 	renderColorSettings(block, config, plugin);
+	renderCustomColorscaleSetting(block, config, plugin);
 	renderApplyChartSettings(block, key, config, app, plugin);
 	renderDeleteChartSetting(block, key, plugin, refresh);
 }

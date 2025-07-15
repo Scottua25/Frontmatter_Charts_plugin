@@ -37,7 +37,6 @@ export class HeatmapSettingTab extends PluginSettingTab {
 		while (container.firstChild) {
 			container.removeChild(container.firstChild);
 		}
-		container.createEl("h1", { text: "Chart Settings" });
 
 		const h3 = document.createElement("h3");
 		h3.textContent = "Charts";
@@ -60,7 +59,7 @@ export class HeatmapSettingTab extends PluginSettingTab {
 		
 		// === Add New Chart Type UI ===
 		new Setting(this.containerEl)
-			.setName("Add New Chart")
+			.setName("Add new chart")
 			.setDesc(
 				"Unique code block name (e.g., nutrients). This will be used to insert the chart into a note."
 			)

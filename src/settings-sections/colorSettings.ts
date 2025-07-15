@@ -18,7 +18,7 @@ export function renderColorSettings(
 
 	addColorWithAlphaSetting(
 		block,
-		isHeatmap ? "Background Color" : "Page Background",
+		isHeatmap ? "Background color" : "Page background",
 		isHeatmap
 			? "Background color behind the entire heatmap."
 			: "Color surrounding the entire chart (canvas area).",
@@ -32,7 +32,7 @@ export function renderColorSettings(
 	if (["heatmap", "bar", "line"].includes(config.chartType)) {
 		addColorWithAlphaSetting(
 			block,
-			"Chart Area Background",
+			"Chart area background",
 			"Color behind bars/lines inside the chart box.",
 			config.backgroundChartColor || "rgba(0,0,0,0)",
 			async (val) => {
@@ -136,7 +136,7 @@ export function renderColorSettings(
 
 	if (isBarOrLine) {
 		const chartColorSetting = new Setting(block)
-			.setName("Chart Color")
+			.setName("Chart color")
 			.setDesc("Primary color for bar or line charts")
 			.addText((text) => {
 				text.setPlaceholder("#ff9900")

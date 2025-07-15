@@ -10,7 +10,7 @@ export async function renderApplyChartSettings(
 	plugin: ChartDashboardPlugin
 ) {
 	new Setting(block)
-		.setName("Apply Settings")
+		.setName("Apply settings")
 		.setDesc("Apply changes to this chart in the currently open note.")
 		.addButton((btn) => {
 			btn.setButtonText("Apply").onClick(async () => {

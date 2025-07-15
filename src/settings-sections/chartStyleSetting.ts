@@ -11,7 +11,7 @@ export function renderChartStyleSetting(
 ): void {
 	
 	new Setting(block)
-		.setName("Chart Style")
+		.setName("Chart style")
 		.setDesc("Substyle of the selected chart type")
 		.addDropdown((drop) => {
 

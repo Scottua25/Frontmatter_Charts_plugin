@@ -10,7 +10,7 @@ export function renderChartTypeSetting(
 	updateRoleFields: () => void
 ): void {
 	new Setting(block)
-		.setName("Chart Type")
+		.setName("Chart type")
 		.setDesc("Select chart visualization")
 		.addDropdown((drop) => {
 			const chartTypes = Object.keys(chartRendererMap);

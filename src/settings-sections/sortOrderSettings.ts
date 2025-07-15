@@ -8,7 +8,7 @@ export function renderSortOrderSetting(
 	refreshUI: () => void
 ) {
 	new Setting(container)
-		.setName("Property Sort Order")
+		.setName("Property sort order")
 		.setDesc("Order of scanned YAML properties in the UI and charts.")
 		.addDropdown((drop) => {
 			drop.addOption("alphabetical", "Alphabetical (A–Z)");
