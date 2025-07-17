@@ -32,7 +32,8 @@ export interface ChartConfig {
 	sortOrder?: "custom" | "alphabetical" | "usage" | "reverse"; // optional if applicable
 	customOrder?: string[];
 	limitDays?: number;
-
+	heatmapCustomGradient?: [number, string][];
+	useCustomColorscale?: boolean;
 	[key: string]: unknown;
 }
 

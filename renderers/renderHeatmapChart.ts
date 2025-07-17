@@ -3,6 +3,7 @@ import Plotly from "plotly.js-dist-min";
 import { getDataMap } from "../src/dataUtils";
 import type { ChartSettings } from "../src/settings";
 import { getSortedFields } from "../src/helpers/sortFields";
+import { customColorscales } from "../src/helpers/customColorScales";
 
 export default function renderHeatmapChart(
 	app: App,
@@ -113,13 +114,27 @@ export default function renderHeatmapChart(
 		annotations,
 	};
 
+	let colorscale: string | [number, string][] = "YlGnBu";
+
+	if (
+		config.useCustomColorscale &&
+		Array.isArray(config.heatmapCustomGradient) &&
+		config.heatmapCustomGradient.length >= 2
+	) {
+		colorscale = config.heatmapCustomGradient;
+	} else if (customColorscales[config.colorscale ?? ""]) {
+		colorscale = customColorscales[config.colorscale!];
+	} else if (typeof config.colorscale === "string") {
+		colorscale = config.colorscale;
+	}	
+
 	const data = [
 		{
 			z,
 			x: dates,
 			y: fields,
 			type: "heatmap",
-			colorscale: config.colorscale || "YlGnBu",
+			colorscale: colorscale,
 			showscale: config.showScale ?? true,
 			reversescale: config.reverseScale ?? false,
 			zmin: 0,

@@ -38,9 +38,9 @@ export class HeatmapSettingTab extends PluginSettingTab {
 			container.removeChild(container.firstChild);
 		}
 
-		const h3 = document.createElement("h3");
-		h3.textContent = "Charts";
-		container.appendChild(h3);
+		const h1 = document.createElement("h1");
+		h1.textContent = "Charts";
+		container.appendChild(h1);
 
 		for (const [key, config] of Object.entries(this.plugin.settings.chartTypes)) {
 			if (!config.chartType) {

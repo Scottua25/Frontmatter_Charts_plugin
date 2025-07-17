@@ -31,7 +31,7 @@ export interface ChartTypeConfig {
 	backgroundPageColor?: string;
 	cellHeight?: number;
 	[roleKey: string]: unknown; // dynamically store role fields like x, y, labels, etc.
-	heatmapCustomGradient?: string[];
+	heatmapCustomGradient?: [number, string][];
 }
 
 export interface ChartSettings {

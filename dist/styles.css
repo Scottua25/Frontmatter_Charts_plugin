@@ -139,6 +139,7 @@ If your plugin does not need CSS, delete this file.
 .colorscale-toggle-label {
 	font-size: var(--font-ui-small);
 	font-weight: 500;
+	margin-right: 4px;
 }
 
 .colorscale-preview-bar {
@@ -149,4 +150,111 @@ If your plugin does not need CSS, delete this file.
 	border-radius: 4px;
 	border: 1px solid var(--background-modifier-border);
 	box-shadow: inset 0 0 3px var(--color-base-40);
+}
+
+.gradient-bar {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	border-radius: 4px;
+	border: 1px solid var(--background-modifier-border);
+	background: linear-gradient(to right, #000000, #ffffff);
+	cursor: pointer;
+	overflow: hidden;
+	z-index: 1;
+}
+
+.gradient-bar-wrapper {
+	position: relative;
+	height: 32px;
+	margin-bottom: 1em;
+}
+.gradient-stop {
+	position: absolute;
+	top: -4px;
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	border: 2px solid white;
+	box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+	transform: translateX(-50%);
+	cursor: grab;
+	pointer-events: auto;
+}
+
+.gradient-stop.selected {
+	outline: 2px solid var(--interactive-accent);
+}
+
+.color-picker-container {
+	display: flex;
+	align-items: center;
+	gap: 0.5em;
+	margin-bottom: 1em;
+}
+
+.gradient-preview-bar {
+	width: 180px;
+	height: 30px;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 4px;
+	margin-top: 4px;
+	margin-left: 8px;
+	background: #ccc;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+.gradient-stop-remove {
+	position: absolute;
+	top: -15px;
+	right: -12px;
+	width: 14px;
+	height: 14px;
+	font-size: 12px;
+	color: white;
+	background-color: var(--background-modifier-error);
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+}
+
+.gradient-stop-remove:hover {
+	background-color: var(--background-modifier-error-hover);
+}
+
+.gradient-stop:active {
+	position: absolute;
+	width: 12px;
+	height: 100%;
+	margin-left: -6px;
+	border: 2px solid white;
+	border-radius: 50%;
+	cursor: pointer;
+	pointer-events: auto;
+	box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+}
+
+.gradient-stop-container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 2;
+	pointer-events: none;
+}
+
+.gradient-stop input[type="color"] {
+	width: 14px;
+	height: 14px;
+	border: none;
+	padding: 0;
+	background: none;
+	cursor: pointer;
 }

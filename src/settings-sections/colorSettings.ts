@@ -75,17 +75,6 @@ export function renderColorSettings(
 		const controlGroup = document.createElement("div");
 		controlGroup.classList.add("colorscale-control-group");
 
-		// Dropdown
-		const dropdown = document.createElement("select");
-		dropdown.classList.add("colorscale-dropdown");
-		colorOptions.forEach((c) => {
-			const opt = document.createElement("option");
-			opt.value = opt.text = c;
-			dropdown.appendChild(opt);
-		});
-		dropdown.value = config.colorscale || "YlGnBu";
-		controlGroup.appendChild(dropdown);
-
 		// Toggle container
 		const toggleContainer = document.createElement("div");
 		toggleContainer.classList.add("colorscale-toggle-container");
@@ -103,6 +92,18 @@ export function renderColorSettings(
 
 		toggleContainer.prepend(toggleLabel);
 		controlGroup.appendChild(toggleContainer);
+		
+		// Dropdown
+		const dropdown = document.createElement("select");
+		dropdown.classList.add("colorscale-dropdown");
+		colorOptions.forEach((c) => {
+			const opt = document.createElement("option");
+			opt.value = opt.text = c;
+			dropdown.appendChild(opt);
+		});
+		dropdown.value = config.colorscale || "YlGnBu";
+		controlGroup.appendChild(dropdown);
+
 
 		// Gradient preview
 		const previewEl = document.createElement("div");
