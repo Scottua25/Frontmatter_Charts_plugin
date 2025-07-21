@@ -62,7 +62,7 @@ export default function renderLineChart(
 	});
 
 	const layout = {
-		title: `Line Chart: ${type}`,
+		title: `Line chart: ${type}`,
 		margin: {
 			t: config.marginTop ?? 30,
 			b: config.marginBottom ?? 30,

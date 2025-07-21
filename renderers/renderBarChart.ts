@@ -63,7 +63,7 @@ export default function renderBarChart(
 	});
 
 	const layout = {
-		title: `Bar Chart: ${type}`,
+		title: `Bar chart: ${type}`,
 		margin: {
 			t: config.marginTop ?? 30,
 			b: config.marginBottom ?? 30,
