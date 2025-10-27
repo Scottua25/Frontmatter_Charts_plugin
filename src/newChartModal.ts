@@ -109,7 +109,7 @@ export class NewChartModal extends Modal {
         new Setting(contentEl)
             .addButton((btn) =>
                 btn
-                    .setButtonText("Create Chart")
+                    .setButtonText("Create chart")
                     .setCta()
                     .onClick(async () => {
                         if (!this.tempConfig.folder) {
